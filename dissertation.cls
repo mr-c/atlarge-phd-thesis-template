@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{dissertation}[2018/11/13 v2.0 TU Delft dissertation class by MB]
-%% Changes over the 2013/07/08 v1.0 TU Delft dissertation class by Moritz Beller, moritzbeller -AT- gmx -DOT- de
+\ProvidesClass{dissertation}[2020/08/25 v1.0 Atlarge dissertation class by LV]
+%% Changes over the 2018/11/1 v2.0 TU Delft dissertation class by Laurens Versluis
 
 \newif\if@nativefonts
 \DeclareOption{nativefonts}{\@nativefontstrue}
@@ -18,7 +18,7 @@
 \RequirePackage{txfonts}
 \RequirePackage{mathptmx}
 
-%% English is the default language, but Dutch is used for some sections.
+%% English is the default language, but Dutch is used for some sections (mandatory summary and title page).
 \RequirePackage[dutch,english]{babel}
 \RequirePackage{calc}
 \RequirePackage[nooneline,footnotesize]{caption}
@@ -169,7 +169,7 @@
 %% Make figures appear in the same section (to avoid a bunch of figures at the end of a section)
 \RequirePackage[section]{placeins}
 % declare the path(s) where your graphic files are
-\graphicspath{{figs/},{asats/figs/},{last-line/figs/},{travis-analysis/figs/},{watchdog-tse/figs/},{debugging/figs/},{debugging/img/}}
+\graphicspath{{figs/},{asats/figs/},{last-line/figs/},{travis-analysis/figs/},{watchdog-tse/figs/},{debugging/figs/},{debugging/img/},{images/}}
 % and their extensions so you won't have to specify these with
 % every instance of \includegraphics
 % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
@@ -235,9 +235,9 @@
 \widowpenalty=1000
 
 %% Define the TU Delft house style colors.
-\definecolor{tudelft-cyan}{cmyk}{1,0,0,0}
-\definecolor{tudelft-black}{cmyk}{0,0,0,1}
-\definecolor{tudelft-white}{cmyk}{0,0,0,0}
+\definecolor{atlarge-blue}{cmyk}{0.99,0.36,0,0.21}
+\definecolor{atlarge-black}{cmyk}{0,0,0,1}
+\definecolor{atlarge-white}{cmyk}{0,0,0,0}
 \definecolor{tudelft-sea-green}{cmyk}{0.54,0,0.32,0}
 \definecolor{tudelft-green}{cmyk}{1,0.15,0.4,0}
 \definecolor{tudelft-dark-blue}{cmyk}{1,0.66,0,0.4}
@@ -251,15 +251,15 @@
 \definecolor{tudelft-bright-green}{cmyk}{0.36,0,1,0}
 \definecolor{tudelft-yellow}{cmyk}{0.02,0,0.54,0}
 
-%% Use TU Delft cyan as the color for titles, unless the 'print' option is
+%% Use Atlarge blue as the color for titles, unless the 'print' option is
 %% specified, in which case we use anthracite, a dark gray, which is also used
 %% for the thumb indices.
 \definecolor{anthracite}{cmyk}{0,0,0,1}
 \if@print
-    \colorlet{title}{tudelft-cyan}
+    \colorlet{title}{atlarge-blue}
     %\colorlet{title}{anthracite}
 \else
-    \colorlet{title}{tudelft-cyan}
+    \colorlet{title}{atlarge-blue}
 \fi
 \colorlet{thumb}{anthracite}
 
@@ -369,7 +369,7 @@
             %% Print the chapter number at the center right in the thumb index.
             \coordinate (center right) at ($(bottom right)+(0pt,0.5\thumbheight)$);
             \node at (center right)[anchor=east,inner sep=2\thumbedge]{
-                \titlefont\bfseries\color{tudelft-white}
+                \titlefont\bfseries\color{atlarge-white}
                 \fontsize{0.75\thumbheight}{0.75\thumbheight}\selectfont
                 \thechapter
             };
@@ -394,7 +394,7 @@
             %% Print the chapter number at the center right in the thumb index.
             \coordinate (center left) at ($(bottom left)+(0pt,0.5\thumbheight)$);
             \node at (center left)[anchor=west,inner sep=2\thumbedge]{
-                \titlefont\bfseries\color{tudelft-white}
+                \titlefont\bfseries\color{atlarge-white}
                 \fontsize{0.75\thumbheight}{0.75\thumbheight}\selectfont
                 \thechapter
             };
