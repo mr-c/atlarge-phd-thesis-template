@@ -1,20 +1,34 @@
 # Atlarge PhD Thesis Template
 
+A PhD thesis dissertation template for VU PhD students.
 
-This is an modified version of the [Improved TU Delft PhD thesis
-template](https://github.com/Inventitech/phd-thesis-template). It
-features a large number of changes to increase both on- and off-screen
-(printing) quality, as well as reduce printing costs. It is a
-double-sided, colored dissertation style with hyperlinks.
+Main features:
 
-## Setup and Installation
+- High on- and off-screen (printing) quality
+- Reduced printing costs
+- Double-sided
+- Colored
+- Hyperlinks
+
+## Setup
+
+### LaTeX Packages
 
 See the original [README](README.txt).
 
-There are three document options to the provided dissertation.cls style -- be sure to use `print` when sending to the printer.
+### Fonts
 
-Mac users will have to install the Libertinus and Inconsolata fonts on their systems.
+You need FontAwesome to compile this thesis template. On MacOS, use: `brew install --cask font-fontawesome`.
+
+## Compiling
+
+To build your dissertation, run `make`. This template requires XeLaTeX.
+
+## Printing
+
+There are three document options to the provided dissertation.cls style -- be sure to use `print` when sending to the printer.
 
 ## Version
 
-This template is based on commit `f56cbfc` of "Improved TU Delft PhD Thesis Template" by Moritz Beller.
+This is an modified version of the [Improved TU Delft PhD thesis
+template](https://github.com/Inventitech/phd-thesis-template), based on commit `f56cbfc`.
