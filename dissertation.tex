@@ -2,6 +2,9 @@
 %\documentclass[print]{dissertation}
 %\documentclass[print,draft]{dissertation}
 
+\usepackage{pdfpages}
+\usepackage{bibentry}
+
 \hyphenation{TestRoots WatchDog proj-ect proj-ects Ec-lipse two-fold clie-nts Mo-cki-to wide-spread}
 \newcommand{\sparkline}[1]{$\vcenter{\hbox{\includegraphics[scale=0.04]{#1}}}$}
 
@@ -18,8 +21,8 @@
 
 %% Specify the title and author of the thesis. This information will be used on
 %% the title page (in title/title.tex) and in the metadata of the final PDF.
-\title{This is a very nice title}
-\author{John Macrel}{Doe}
+\title{Massivizing {FAIR,} {efficient,} and sustainable workflows for Bioinformatics.}
+\author{Michael Robin}{Crusoe}
 
 %% Use Roman numerals for the page numbers of the title pages and table of
 %% contents.
@@ -29,8 +32,8 @@
 
 %% The (optional) dedication can be used to thank someone or display a
 %% significant quotation.
-\dedication{\epigraph{There's no free lunch.
-  }{Alexandru Iosup}}
+%\dedication{\epigraph{There's no free lunch.
+%  }{Alexandru Iosup}}
 
 \tableofcontents
 
@@ -43,7 +46,46 @@
 %% Turn on thumb indices.
 \thumbtrue
 
+\nobibliography*
+
 \include{introduction/introduction}
+
+\chapter{Methods Included: Standardizing computational reuse and portability with the Common Workflow Language.}
+\label{methods-included}
+
+\bibentry{crusoe-methods-2022}
+
+Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativecommons.org/licenses/by/4.0/}
+
+Reproduced here without changes including supplemental material "p54-crusoe-supp.pdf".
+\includepdf[pages=-,addtotoc={1,section,1,Introduction,methods-included-introduction,4,section,1,Background on Workflows and Standards for Workflows,methods-included-background,4,subsection,2,Why Workflows?,methods-included-why-workflows,4,subsection,2,{Sidebar:} Monolingual and Polylingual Workflow Systems,cwl-methods-mono-poly,5,subsection,2,Why Workflow Standards?,methods-included-why-standards,6,section,1,Features of the Common Workflow Language Standards,methods-included-features,7,subsection,2,{Sidebar:} The CWL Project and Free/Open Source Software (F/OSS),methods-included-foss,7,subsection,2,Execution of workflows in CWL format,methods-included-wflow-exection,8,subsection,2,When is CWL not useful?,methods-included-not-useful,8,section,1,Open {Source,} Open {Standards,} Open Community,methods-included-open-star,8,subsection,2,The CWL Principles,methods-included-cwl-principles,9,section,1,Conclusion,methods-included-conclusion}]{methods-included.pdf}
+\includepdf[pages=-]{p54-crusoe-supp.pdf}
+
+\include{deepdive/deepdive}
+
+\chapter{Sharing interoperable workflow provenance: A review of best practices and their practical application in CWLProv}
+\label{cwlprov}
+\bibentry{khan_sharing_2019}
+
+Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativecommons.org/licenses/by/4.0/}
+
+Reproduced here without changes.
+\includepdf[pages=-,addtotoc={2,section,1,Introduction,cwlprov-intro,2,section,1,Background,cwlprov-background,2,subsection,2,Provenance,cwlprov-bg-prov,2,subsection,2,Interoperability,cwlprov-bg-interop,3,subsection,2,Related Work,cwlprov-related,3,subsubsection,3,Workflow software environment capture,cwlprov-related-wfsoftenvcapture,3,subsubsection,3,Data/method {preservation,} {aggregation,} and sharing,cwlprov-related-datamethod,4,subsubsection,3,Provenance capture and standardization,cwlprov-related-provcapture,4,section,1,Levels of Provenance and Resource Sharing,cwlprov-levels-sharing,6,subsection,2,Level 0,cwlprov-level0,7,subsection,2,Level 1,cwlprov-level1,7,subsection,2,Level 2,cwlprov-level2,8,subsection,2,Level 3,cwlprov-level3,8,section,1,CWLProv 0.6.0 and Utilized Standards,cwlprov-0.6.0,9,subsection,2,Applied standards and vocabularies,cwlprov-applied-standards-vocabs,9,subsubsection,3,Common Workflow Language,cwlprov-applied-cwl,9,subsubsection,3,Research Object,cwlprov-applied-ro,10,subsubsection,3,PROV Data Model,cwlprov-applied-prov,11,subsection,2,CWLProv research object,cwlprov-cwlprovrobundle,12,subsection,2,Retrospective provenance profile,cwlprov-retroprov,12,section,1,Practical Realization of CWLProv,cwlprov-practical,14,subsection,2,Achieving recommendations with provenance levels,cwlprov-recs,15,section,1,CWLProv Evaluation with Bioinformatics Workflows,cwlprov-eval,15,subsection,2,Alignment workflow,cwlrpov-eval-alignment,16,subsection,2,Somatic variant calling workflow,cwlprov-eval-somatic,16,subsection,2,Evaluation activity,cwlprov-eval-activity,18,subsection,2,Evaluation results,cwlprov-eval-results,18,subsubsection,3,CWLProv and interoperability,cwlrpov-eval-results-interop,18,subsubsection,3,Evaluating provenance profile,cwlprov-eval-results-provprofile,19,subsubsection,3,Temporal and spatial overhead with provenance,cwlprov-eval-results-overhead,20,subsubsection,3,Output comparison across enactments,cwlprov-eval-results-output-comparison,20,section,1,Discussion and Future Directions,cwlprov-discussion,20,subsection,2,Compute and storage resources,cwlprov-discuss-resources,20,subsection,2,Provenance profile augmented with domain knowledge,cwlprov-discuss-domain,21,subsection,2,Big {-omics} data,cwlprov-discus-bigdata,21,subsection,2,Improving CWLProv efficiency with selective provenance capture,cwlprov-discuss-selective,21,subsection,2,Enforcement of best practices — an open problem,cwlprov-discuss-enforcement,22,section,1,Conclusion,cwlprov-conclusion,22,section,1,Availability of source code and requirements,cwlprov-availability-code,22,section,1,Availability of supporting data and materials,cwlprov-availability-supporting,22,section,1,Abbreviations,cwlprov-abbrevs,22,section,1,Competing interests,cwlprov-competing-interests,23,section,1,Funding,cwlprov-funding,23,section,1,Authors’ contributions,cwlprov-authors-contributions,23,section,1,Acknowledgements,cwlprov-acks,23,section,1,References,cwlprov-refs}]{giz095.pdf}  % CWLProv
+
+\chapter{Recording provenance of workflow runs with RO-Crate}
+\label{wrroc}
+%\fullcite{}
+%License
+Reproduced here without changes.
+\includepdf[pages=-]{Recording-provenance-of-workflow-runs-with-RO-Crate.pdf}
+
+\chapter{A Non-Intimidating Approach to Workflow Reproducibility in Bioinformatics: Adding Metadata to Research Objects through the Design and Evaluation of Use-Focused Extensions to CWLProv}
+\label{cwlprov-analysis}
+%\fullcite{}
+%License
+Reproduced here without changes.
+\includepdf[pages=-]{renske-cwlprov-analysis-manuscript.pdf}
+
 \include{conclusion/conclusion}
 
 %% Use letters for the chapter numbers of the appendices.

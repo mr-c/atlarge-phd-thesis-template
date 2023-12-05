@@ -1,0 +1,243 @@
+\chapter{CWL Deep Dive}
+\label{cwl-deep-div}
+
+
+\newpage
+
+\dropcap{C}ommon Workflow Language is ...
+
+%Target: IEEE Transactions on Parallel and Distributed Systems (TPDS)
+%Audience: future students to explain my work and way of working
+%FOCUS ON: 
+%Design choices
+%Implementation choices
+%Practical use
+%Lessons learned
+%Comparison with state-of-the-art
+
+
+%Sufficiency / necessity argument: high level comparison with alternatives/competitors
+%Repeat qualitative analysis for other popular workflow languages (WDL, SnakeMake, Nextflow, Galaxy)
+%sufficient --> has all features
+%necessary --> first/only one to have _all_
+%Column A1: core workflow patterns (almost all have it) ← evidence + expert interpretation
+%A2: conformance test (few have it) ← evidence based
+%A3: ... (community developed) ← argumentative
+%A4: multiple independent implementations ← evidence based
+
+
+% Need to explain each decision; for each: what were the alternatives and why weren’t they chosen?
+% 
+% Relationship with control-flow workflows (systems): (data-flow workflows go inside control-flow workflows, not the other way around)
+% 
+% Design choices
+% 
+% Build upon existing standards (POSIX, OCI, YAML, JSON-LD, RDF)
+% Separation of concerns: <details needed>
+% (often with accompanying Docker format software containers)
+% Focus on the workflow author (IDE integrations, syntax choices, future plans)
+
+\section{The Problem of Standardization}
+
+Standardization is the communication of an existing agreement between a group to a larger context. Therefore prior to standardization that group has to come to an agreement and precisely define their shared understanding. Initially the group that became the CWL community looked at codifying an existing workflow and tool description language (specifically Galaxy) as the basis for a standard workflow language. After a deeper examination it was found by Galaxy core developers that due to Galaxy’s many years of organic growth and an early choice about how to enable templating and advanced command line construction\footnote{Galaxy’s tool description format allows for Python expressions. However the Galaxy workflow engine is written in Python and due to other technical reasons this meant that tool description authors had access to all Galaxy internals from their tool descriptions. Therefore, for other systems to implement the Galaxy tool description format they would need the entire Galaxy Python codebase (or an implementation of it) available as well.} made it unsuitable to codify the Galaxy workflow and tool description language directly into a standard. Therefore the decision was made to make a new workflow and tool description language, building on the lessons learned from the multitude of workflow languages and systems before.
+
+Making a new workflow language, even working from the perspective of many decades of collective experience, is not a small undertaking. Add to that the creation of a precise specification, conformance tests, and many implementations and one sees why standardization and the necessary work that both precedes that succeeds standardization needs to be weighed against the potential and likely benefits.
+
+\section{An Idealized Workflow Language}
+%<AI->MC: Explain what kinds of issues such a language would address, preferably with brief examples. Then, you can derive naturally the goals. // could go in the Introduction (goals for the next decade, but here we take one step toward standardization)>
+
+\subsection{Goals}
+Standardized functional portable description of command-line tools and dataflow workflows made up of them
+(these descriptions are able to be complete enough to execute)
+There should not be implementation or vendor specific details in the specification.
+Improve communication and understanding between workflow author and users labels / human friendly identifiers / subworkflows
+That data and inputs are explicit and they have identifiers
+All the hallmarks of a good workflow system (ASAP) are supported directly or indirectly
+Being a good player in the ecosystem by supporting the 17 FAIR Principles where possible. (See section 5 for more details).
+
+\subsection{Non-Goals}
+Supporting every theorized workflow construct ; the “Common” in CWL is about targeting the features that are both commonly used by workflow authors and commonly implemented by workflow engines.
+(web) service orchestration / interaction with external stateful systems 
+Why not? they have state, can go away, not idempotent, not reproducible. (The Taverna experience) Services are not bad, but they need to give the users the workflow and references to the reference data used
+Neither business process management nor other control-flow approaches
+(no stopping for external decision making, which is not reproducible). CWL tools/workflows could be called from a business process management.
+not a strict guarantee of reproducibility
+
+\section{The Design of CWL}
+\subsection{Overview}
+Two sets of features for the 2 standards
+% one visual
+\subsection{Design Choices}
+\subsubsection{Unit of compute: POSIX command line tools.}
+
+* Supports Goal \#1
+
+* In bioinformatics, command line tools vastly outnumber services and GUIs
+* The POSIX application interface is well understood and widely used
+* The model in summary: inputs are a list of strings, outputs are written to the filesystem, STDOUT, and STDERR. Assume that exit code of not 0 is an error, this is customizable. CWL v1.2 allows capturing the exit code for further use.
+* Services were not chosen as they are too fragile and immature compared to POSIX; experience with Taverna and other systems showed that many advanced concepts are needed to cope. Services are rarely 1st class components of workflow systems, so not a good candidate for a “common” language.
+
+\subsubsection{connection between compute and data into a full workflow (the dataflow model)}
+Necessary to have enough information to support Goal \#1 and \#4
+We must document all connections between tasks, even those that a user might not be aware of
+This enables portability regardless of the execution environment being  distributed or having a shared filesystem. It also enable better provenance tracking
+CWL’s object model does not use strings to track file or directory inputs and outputs, instead using a simple dictionary of properties (“class: File” and “class: Directory”). These objects do not assign a path to a File or Directory until just prior to tool execution. Instead Files and Directory have a “location” identifier, and the name of the File or Directory is also stored separately, allowing the location IRI to be meaningful to the workflow engine.
+Alternatives:
+
+\subsubsection{file streaming is supported but not required}
+A common optimization pattern in hand written workflows
+If marked as such, CWL allows File inputs/outputs to be implemented using a named pipe, a.k.a “|”
+This allows workflow systems to speed up execution by streaming data into/out-of object stores or directly between tasks
+All “type: stdin”, “type: stdout”, and “type: stderr” Inputs/Output have this potential without further specification by the user. Otherwise they can add `streamable: true’ to any Input/Output of `type: File` or `type: File[]`
+This was a simple thing to add to the CWL specification, so not adding it was not seriously considered. However, exploitation of this feature has only been done by one engine: toil-cwl-runner.
+
+\subsubsection{no tool to tool IP based communication}
+Would violate anti-goal \#1
+Ensuring a network path may be non-trivial or not allowed in some workflow execution systems ; implies co-scheduling, which is not very common
+Lots of costs to implement this and often not needed, so we kept it out of CWL very early on
+CWL has no construct to specify parallel co-scheduling nor port coordination
+There are many frameworks and libraries for service orchestration, users are encouraged to use them if that is their need
+
+\subsubsection{syntax choices (balance between readability and using off the shelf libraries for parsing)}
+While CWL is regular enough for automated conversion to/from, or programmatic assembly, we knew that users would still be writing/editing by hand (especially during the early phases of adoption) (Goal \#3)
+When a design decision came down to an option being more convenient for users versus implementers, we often chose the users. Planned revisions to the standards will include even more user focused design patterns.
+Many users of CWL will be causal and infrequently interacting with CWL. By favoring users we make the language more attractive and increase the likelihood of adoption
+Examples: map<> syntax simplification; YAML;
+JSON? Can’t have comments ; new DSL? Harder to implement, not necessarily more readable for users. XML? gross.
+
+\subsubsection{Review of workflow constructs supported}
+(explain why and cross-reference the workflow patterns repository) See \url{https://github.com/common-workflow-library/cwl-patterns/tree/master/workflow_patterns_initiative}
+
+\subsubsection{Optional parts}
+
+To support a diverse ecosystem (Goal \#3). Some workflow engines may not want to / be able to implement all of the CWL syntax
+What:
+V1.0+: InlineJavascriptRequirement, SchemaDefRequirement, LoadListingRequirement, DockerRequirement, SoftwareRequirement, InitialWorkDirRequirement, EnvVarRequirement, ShellCommandRequirement, ResourceRequirement
+V1.1+: WorkReuse, NetworkAccess, InplaceUpdateRequirement, ToolTimeLimit
+One can use/implement the CWL CommandLineTool standard separate from the entire Workflow standard, if desired
+This allows engines and other CWL consumers/produces to make progressively more useful tools while being able to communicate clearly what they support to users (and to fail quickly if given a document they can’t fully execute)
+All of these features must be listed by the author of a CWL document, if used. Features mentioned under the “hints” section are allowed to be ignored by consumers of the document if they don’t (yet) support them. Features mentioned under “requirements” must be supported, and if they are not available then consumers of the document should fail early and inform the user why.
+Feature detection by syntax (instead of these explicit feature flags) was considered and may be implemented in CWL 2.0 to simplify the syntax for the author
+
+\subsubsection{Linked data and external ontologies}
+
+Don’t reinvent the wheel, Supports Goals 2,3, 4
+File formats are complicated and often very domain specific. Likewise metadata models for workflows and tools
+The external ontologies are governed and maintained by experts and contributors, each on their own cadence separate from the CWL standards cadence. Therefore they can be improved/extended without waiting for a new release of CWL
+The EDAM ontology is a popular source of identifiers for bioinformatic file formats and it models the relationship between them along with many other useful aspects. For CommandLineTool and Workflow metadata, it is recommended (but not mandatory) to use the schema.org ontology.
+Bundling specific baseline versions of some of these ontologies in CWL as a shortcut for users has been considered and might appear in a future version of the standards.
+\url{https://www.commonwl.org/v1.1/Workflow.html#Extensions_and_metadata}
+
+\subsubsection{software containers}
+Optional, but recommended! Docker format, engine agnostic (Singularity, podman, apptainer, docker, etc..)
+Software installation is said to be the hardest problem in bioinformatics and many other research fields
+Therefore CWL supports the specification of an recommended (or required) Docker format software container as part of the CommandLineTool specification
+This helps (but does not guarantee) reproducibility
+Under “DockerRequirement”, tool description authors can specify one of the following: the name of a docker/OCI format image from a registry (defaulting to hub.docker.com but others are allowed) ; a URL to a docker/OCI format image ; an in-place “Dockerfile” format recipe for Docker/OCI format image construction
+When CWL began, the Open Container Initiative was in its infancy. It is planned that future versions of the CWL standards will refer to the OCI standards more directly. The Docker engine is not a requirement for fulfilling the “DockerRequirement”, any engine that support the Docker image format (directly or indirectly) is a valid choice by a CWL compliant engine; this includes Singularity, udocker,
+\subsubsection{Mechanism for extensions}
+Allows and encourages vendors/users to develop/use well marked extensions to the CWL standards
+As CWL aims to support features that are “common”ly used by people and “common”ly implemented by engines, it shouldn’t get in the way of those who want to build upon it
+Now that CWL is more stable and more widely deployed, getting vendors to experiment with new features and then learning from their experiences provides a better model for stable enhancement
+All extensions must be a URL (often abbreviated using the \$namespace feature) and preferably resolve to a web page with more information about the extension. Several features that exist in post v1.0 version of CWL came from vendor extensions: TimeLimit, WorkReuse (previously \url{http://arvados.org/cwl#ReuseRequirement} ), NetworkAccess, InplaceUpdateReqirement, LoadListingRequirement. Like the optional features of CWL, they can be specified under the “hints” section if they can be safely ignored, or under “requirements” if they are necessary for proper execution.
+The alternative would be secret extensions/changes that would be hard to detect prior to tool/workflow execution which would hamper reproducibility/ reusability.
+\subsubsection{conformance tests}
+Need to be able verify the behavior of the various CWL implementations (Goal \#2)
+Conformance tests that target different features, their aspects, and combinations of the above along with specified correct output (or a flag that the provided input should result in an error). The tests are tagged with the names of optional features used, if any.
+This provides assurances to users that their CWL documents will work in multiple environments, and helps engine authors make progress as they implement CWL features
+Conformance tests are developed in conjunction with releases of the CWL standards. They are available under the Apache 2.0 license.
+We wrote our own testing framework, but this is a prototype of a plugin to py.test that could be completed.
+\subsubsection{Optional support for Javascript in very well defined circumstances}
+As the CWL standards don’t aim to cover all possible needs especially when it comes to most extremely badly designed command line interfaces, a script language was chosen as an optional feature.
+Users may provide values for certain fields in CWL using ECMAScript 5.1 (commonly known as Javascript). What objects are available to them in that context is tightly defined; no cross talk is allowed; and the order of parsing is explicit
+This allows users to work around missing features without having to change the underlying program (which might not be possible or realistic). It also allows for cheap rearrangement of complex object trees without requiring scheduling a task and marshalling/unmarshalling data.
+Users must specify that they need the `InlineJavascriptRequirement` under features. To distinguish the javascript from literal strings, it is wrapped in `${ }` for  ECMAScript function body style, or `$( )` for ECMAScript Expression style.
+This has been a controversial feature. Many users (and the authors of the CWL standards themselves) would prefer to use Python, but the lack of secure Python VMs prevented this. Currently we are debating on how best to allow users to write CWL Expressions using newer versions of the ECMAScript standard while keeping backward compatibility. ECMAScript 5.1 is from 2011, but newer versions of ECMAScript are not completely backwards compatible with code that targets ECMAScript 5.1.
+\subsubsection{Separation of concerns}
+There are many audiences for a workflow or tool description and they can be divided into those who execute said description and those who write them.
+In designing and refining the CWL standards, maintaining this separation of concerns cleanly was an important sub-goal.
+This allows workflow/tool description authors to focus on their analysis and/or communication goals. Likewise it allows workflow engines to focus on optimizing the execution of these same descriptions.
+The declarative syntax of CWL, the defined boundaries and expectations, and CWL being a standard and not a library or framework that must be included all give freedom to workflow engines authors to optimize as best they can. It even encourages “vertical engineering” where a workflow system is written, or heavily customized, for a specific technology stack as opposed to the traditional middleware “compatible with everything” approach that sacrifices speed and maintainability for flexibility.
+From an engineering perspective, this separation of concerns is at the heart of CWL. Alternatives to this approach were not considered from the moment the founders decided to make a community standard.
+\subsubsection{variety of execution models}
+single-machine, cluster with a shared filesystem, and distributed
+Researchers typically have access to a wide variety of computing capability, and their workflows should not need to be rewritten to be runnable elsewhere. (Portability from Goal \#1)
+CWL’s object and execution model allow for execution on a single-machine, compute cluster with a shared filesystem, or distributed execution without a shared filesystem. None of this requires any changes to the tool nor workflow descriptions
+Assumptions about paths, directory layouts, and other local details are quite common in hand written workflows. Once these workflow get very large (as they tend to do over time) this can be incredibly time consuming to abstract out. By building this into the CWL standards, everyone benefits without additional work.
+As mentioned before, CWL does not represent the a file as a string, but instead as an object with properties, thus forcing the tool description author to be explicit about which inputs are files and which are not. Likewise, when forming a workflow by connecting the inputs and outputs of tools together, one does not do so by using file names or paths (like in a Makefile) but by using identifiers for particular outputs of particular steps which are often meaningful and concise.
+5. alternatives not chosen, and why they weren't selected
+\subsubsection{Differentiating between data paths and regular strings}
+In the CWL object model, which can be queried and manipulated by CWL Parameter References and CWL Expressions, we distinguish between paths (to a file or a directory) and other strings.
+While at the time of CommandLineTool execution a filesystem path will be synthesized, at all other times these objects are distinguished by a URI.
+This URI might be meaningful to the engine directly (like an object store path) or it might be further transformed or queried internally.
+
+\subsection{Syntax Examples of CWL}
+
+\section{The CWL standards support the 17 FAIR Principles}
+It is one of the goals of the CWL project to assist workflow engines/platforms and users in realizing the FAIR principles[3] while not imposing a burden for lack of perfection or completion. When considering the FAIR and CWL we examine not just the context of the workflow and tool descriptions, but also the context of creating, sharing, and executing these descriptions; and finally the context not narrowing the adherence of inbound data to the FAIR principles and increasing the adherence of the FAIR principles for the outbound data.
+
+Rather than attempting to conduct a quantitative study, we focus here on qualitative analysis as the FAIR Principles are just that, principles, and not specific metrics. For specific data types there are specific community led FAIR metrics, but there are no universal FAIR metrics (nor should there be, as “FAIR is not a standard”[4]).
+\subsection{To be Findable}
+\subsubsection{F1. “(meta)data are assigned a globally unique and persistent identifier”}
+In CWL, all items of type File, Directory, Workflow, and CommandLineTool have an identifier which can be “globally unique and eternally persistent” if available, or just locally meaningful. For example, the CWL reference implementation’s use of CWLProv generates random UUIDs for inputs, outputs, and intermediate values, but a workflow platform or service would use registered identifiers.
+\subsubsection{F2. “data are described with rich metadata (defined by R1 below)”}
+The CWL standards prescribe how Workflow and CommandLineTool descriptions can have arbitrary embedded metadata in a structured way. For generic metadata it is recommend to use the schema.org vocabulary. While community or domain specific metadata is also allowed and encouraged, the CWL standards do not prescribe any particular metadata standard, as that is a decision for specific groups to develop and evolve.
+\subsubsection{F3. “metadata clearly and explicitly include the identifier of the data it describes”}
+This is automatic for CWL documents, as the metadata is embedded in the data it describes.
+\subsubsection{F4. “(meta)data are registered or indexed in a searchable resource”}
+There are several registries of workflows, and one in particular (Workflow Hub) has chosen the CWL object model for their workflow metadata model, even for workflows not written using the CWL standards.
+\subsection{To be Accessible}
+\subsubsection{A1. “(meta)data are retrievable by their identifier using a standardized communications protocol”}
+There is no official API for retrieving a CWL document via an identifier. Popular choices include HTTP and the “GA4GH Tool Registry API” (also known as GA4GH TRS). By retrieving a CWL description (data) one then has access to the embedded metadata (if any).
+
+For retrieval of input data for the execution of a CWL workflow or tool, CWL allows for any URI scheme. HTTP(S) is available in all known CWL implementations (modulo local network policies) and many implementations support the relevant object storage protocols. GA4GH has an API specification (GA4GH DRS) for services that convert a data identifier into a platform (and perhaps region) specific URI. Using any of these protocols, their future versions, or entirely new protocols, requires no changes to the CWL standards as long as URI/IRIs are available.
+\subsubsection{A1.1 “the protocol is open, free, and universally implementable”}
+HTTP, GA4GH TRS, and GA4GH DRS all meet this requirement.
+\subsubsection{A1.2 “the protocol allows for an authentication and authorization procedure, where necessary”}
+HTTP meets this requirement. For GA4GH TRS they state that “GA4GH recommends the use of the OAuth 2.0 framework (RFC 6749) for authentication and authorization. It is also recommended that implementations of this standard implement and follow the GA4GH Authentication and Authorization Infrastructure (AAI) standard.
+While the TRS standard itself does not define any behaviour specific to authorization, given that it hosts and shares publicly available workflows. For future expansion, we recommend that if authorization is needed, that it follows the OAuth 2.0 recommendations as defined above.”
+For GA4GH DRS “The DRS implementation is responsible for defining and enforcing an authorization policy that determines which users are allowed to make which requests. GA4GH recommends that DRS implementations use an OAuth 2.0 bearer token, although they can choose other mechanisms if appropriate.”
+\subsubsection{A2. “metadata are accessible, even when the data are no longer available”}
+Not a guarantee for GA4GH TRS, DRS, or plain HTTP. Possibly guaranteed for workflows registered with the Workflow Hub.
+\subsection{To be Interoperable}
+\subsubsection{I1. (meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation.}
+Tool and workflow descriptions that conform to the CWL standards are transformable (inclusive of any embedded metadata) to JSON-LD as a pleasant (and purposeful) side effect of the CWL standards being defined in Salad schema language. The reference implementation of CWL has such a capability.
+
+“There are three parts to [the CWLProv] profile:
+
+	CWLProv BagIt, how the resources of an execution are packaged using BagIt
+	CWLProv Research Object, how the resources of an execution are related in an RO
+	CWLProv PROV, how the workflow execution provenance is modelled in W3C PROV“
+\subsubsection{I2. (meta)data use vocabularies that follow FAIR principles}
+The vocabularies used in CWL are RDF schema, Salad (which uses Dublin Core terms, RDF, XML, and XSD). Examining these vocabularies in the context of the FAIR principles is out of scope for this paper. The vocabularies used in CWLProv are CWL, ResearchObject, BagIt, and the PROV-Data Model (PROV-DM). User provided vocabularies, such as identifiers for data format types (like the EDAM Ontology), or CWL document metadata (like schema.org), may or may not meet the FAIR principles.
+\subsubsection{I3. (meta)data include qualified references to other (meta)data}
+All references in the CWL and CWLProv object models are qualified.
+\subsection{To be Reusable}
+\subsubsection{R1. meta(data) are richly described with a plurality of accurate and relevant attributes}
+The CWL standards explicitly support user provided metadata and specifically using the schema.org ontology. There are a number of other specific attributes available in CWL documents as well: ‘label’, ‘doc’, ‘SoftwareRequirement’.
+\subsubsection{R1.1. (meta)data are released with a clear and accessible data usage license}
+The CWL standards and schemas are released under the Apache 2.0 open source license; likewise the CWLProv profile. Individual CWL documents can embed a license reference using a schema.org annotation which is picked up and propagated by Workflow Hub and DockStore
+\subsubsection{R1.2. (meta)data are associated with detailed provenance}
+This is not required by the CWL standards. The CWLProv profile is one way for workflow engines/platforms to represent the provenance of a CWL workflow execution, its inputs, and the results.
+\subsubsection{R1.3. (meta)data meet domain-relevant community standards}
+For many (sub)domains, CWL is the relevant standard for workflow and tool description.
+\subsection{Areas of improvement}
+F1. A default source for identifiers of CWL tools and workflows could be decided upon and standardized. Likewise there could be an agreed upon registration method and lookup mechanism for these identifiers. This could be a single source or federated.
+F2. Pass through of metadata related to workflow inputs: For data types that can’t embed metadata, or the metadata was provided separately, there is not yet a standardized construct to pass along metadata through a workflow and attach it (entirely, or by parts) to one or more of the outputs.  In 2018-2019 there was a proposal to accomplish this in the context of CWLProv, but it has yet to be implemented. Note, that this proposal does not require the modification of the CWL standards as it uses CWL’s extensible metadata feature.
+A1. A future version of the GA4GH Tool Discovery API (or a different API) could support metadata retrieval for a given identifier. Using HTTP Content Negotiation one could imagine a simple standard for getting the metadata for a given identifier if an agreement was made and there was wide adoption.
+Neither the CWL standards nor the CWLProv profile requires that metadata about workflow/tool inputs is acquired at/before execution time. However any CWL/CWLProv system could do such a thing without needing to amend either the CWL standards or the CWLProv profile.
+\section{The CWL Ecosystem in Practice}
+\subsection{Evolutionary Experience: Both the Standard(s) and the Ecosystems}
+\subsection{Snapshot of the CWL Ecosystem in 2024}
+\subsection{CWL users + success stories}
+%[practical: examples, the larger and more complex the better]
+%[clear examples for ASAP] ← Arvados details and quote, automation for COVID-19
+%[clear examples for FAIR] ← CWLprov, WorkflowHub details
+
+\section{Limitations / Analysis / Discussion}
+
+\section{Conclusion and Ongoing Work}
+
+
+
+
