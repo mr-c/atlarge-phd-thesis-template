@@ -1,10 +1,12 @@
 \chapter{CWL Deep Dive}
-\label{cwl-deep-div}
+\label{cwl-deep-dive}
 
-
-\newpage
 
 \dropcap{C}ommon Workflow Language is ...
+
+In \cite{crusoe-methods-2022} we described how the CWL community came to be, the community's goals and ways of working.
+
+In this chapter I will take a deeper dive into the technical decisions made by the CWL Community (of which I'm a co-founder, later CWL Community Engineer and since 2018 the CWL Project Leader).
 
 %Target: IEEE Transactions on Parallel and Distributed Systems (TPDS)
 %Audience: future students to explain my work and way of working
@@ -39,12 +41,19 @@
 
 \section{The Problem of Standardization}
 
-Standardization is the communication of an existing agreement between a group to a larger context. Therefore prior to standardization that group has to come to an agreement and precisely define their shared understanding. Initially the group that became the CWL community looked at codifying an existing workflow and tool description language (specifically Galaxy) as the basis for a standard workflow language. After a deeper examination it was found by Galaxy core developers that due to Galaxy’s many years of organic growth and an early choice about how to enable templating and advanced command line construction\footnote{Galaxy’s tool description format allows for Python expressions. However the Galaxy workflow engine is written in Python and due to other technical reasons this meant that tool description authors had access to all Galaxy internals from their tool descriptions. Therefore, for other systems to implement the Galaxy tool description format they would need the entire Galaxy Python codebase (or an implementation of it) available as well.} made it unsuitable to codify the Galaxy workflow and tool description language directly into a standard. Therefore the decision was made to make a new workflow and tool description language, building on the lessons learned from the multitude of workflow languages and systems before.
+A standard is the named communication of an existing agreement between a group to a larger context. Therefore prior to standardization that group has to come to an agreement and precisely define their shared understanding. Initially the group that became the CWL community looked at codifying an existing workflow and tool description language (specifically Galaxy) as the basis for a standardized workflow language. After a deeper examination it was found by Galaxy core developers that due to Galaxy’s many years of organic growth and an early choice about how to enable templating and advanced command line construction\footnote{Galaxy’s tool description format allows for Python expressions. However the Galaxy workflow engine is written in Python and due to other technical reasons this meant that tool description authors had access to all Galaxy internals from their tool descriptions. Therefore, for other systems to implement the Galaxy tool description format they would need the entire Galaxy Python codebase (or an implementation of it) available as well.} made it unsuitable to codify the Galaxy tool description language directly into a standard. Therefore the decision was made to make a new workflow and tool description language, building on the lessons learned from the multitude of workflow languages and systems before.
 
 Making a new workflow language, even working from the perspective of many decades of collective experience, is not a small undertaking. Add to that the creation of a precise specification, conformance tests, and many implementations and one sees why standardization and the necessary work that both precedes that succeeds standardization needs to be weighed against the potential and likely benefits.
 
 \section{An Idealized Workflow Language}
 %<AI->MC: Explain what kinds of issues such a language would address, preferably with brief examples. Then, you can derive naturally the goals. // could go in the Introduction (goals for the next decade, but here we take one step toward standardization)>
+
+Workflow issues circa 2014: 
+1. tool/workflow descriptions that depend on engine/platform implementation details are non-portable
+2. lack of standard or shared language meant that tool authors or 3rd parties describing tools have to support each workflow system separately. For complex command-line tools, or ones that changed quickly, this maintenance burden was substantial
+3. some workflow approaches did not scale well with larger sets of data or increasing complexity of the workflow (common with Make-like systems that encode step names, replica and sample IDs and other organizational details in the filenames assigned to data)
+4. Most "in house" workflow systems bake in local computing facility details (names of servers, specific filesystem mount paths) that prevent anyone using even the same code at another institute without (perhaps significant) modification.
+5. Existing standards in the workflow space were not relevant to most scientific workflows; instead focused on control-flow and business process workflows.
 
 \subsection{Goals}
 Standardized functional portable description of command-line tools and dataflow workflows made up of them
@@ -114,10 +123,12 @@ To support a diverse ecosystem (Goal \#3). Some workflow engines may not want to
 What:
 V1.0+: InlineJavascriptRequirement, SchemaDefRequirement, LoadListingRequirement, DockerRequirement, SoftwareRequirement, InitialWorkDirRequirement, EnvVarRequirement, ShellCommandRequirement, ResourceRequirement
 V1.1+: WorkReuse, NetworkAccess, InplaceUpdateRequirement, ToolTimeLimit
+V1.2+: (abstract) Operation processes (non-runnable, useful for provenance reporting from non-CWL systems), conditional execution of steps using `WorkflowStep.when`
+
 One can use/implement the CWL CommandLineTool standard separate from the entire Workflow standard, if desired
 This allows engines and other CWL consumers/produces to make progressively more useful tools while being able to communicate clearly what they support to users (and to fail quickly if given a document they can’t fully execute)
-All of these features must be listed by the author of a CWL document, if used. Features mentioned under the “hints” section are allowed to be ignored by consumers of the document if they don’t (yet) support them. Features mentioned under “requirements” must be supported, and if they are not available then consumers of the document should fail early and inform the user why.
-Feature detection by syntax (instead of these explicit feature flags) was considered and may be implemented in CWL 2.0 to simplify the syntax for the author
+All of these features must be listed by the author of a CWL document, if used, except for conditional workflow steps in CWL v1.2+. Features mentioned under the “hints” section are allowed to be ignored by consumers of the document if they don’t (yet) support them. Features mentioned under “requirements” must be supported, and if they are not available then consumers of the document should fail early and inform the user why.
+Feature detection by syntax (instead of these explicit feature flags) was considered and may be implemented in CWL 2.0 to simplify the syntax for the description author.
 
 \subsubsection{Linked data and external ontologies}
 
@@ -172,6 +183,11 @@ While at the time of CommandLineTool execution a filesystem path will be synthes
 This URI might be meaningful to the engine directly (like an object store path) or it might be further transformed or queried internally.
 
 \subsection{Syntax Examples of CWL}
+
+\subsection{Support levels for optional features in CWL runners circa 2024}
+% TODO: turn into a table
+`toil-cwl-runner`: all of CWL v1.0-v1.2; `InplaceUpdateRequirement` is only supported when using a shared filesystem with the ``--bypass-file-store`` option.
+
 
 \section{The CWL standards support the 17 FAIR Principles}
 It is one of the goals of the CWL project to assist workflow engines/platforms and users in realizing the FAIR principles[3] while not imposing a burden for lack of perfection or completion. When considering the FAIR and CWL we examine not just the context of the workflow and tool descriptions, but also the context of creating, sharing, and executing these descriptions; and finally the context not narrowing the adherence of inbound data to the FAIR principles and increasing the adherence of the FAIR principles for the outbound data.
