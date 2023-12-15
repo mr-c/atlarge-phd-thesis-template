@@ -90,14 +90,15 @@ Two sets of features for the 2 standards
 Necessary to have enough information to support Goal \#1 and \#4
 We must document all connections between tasks, even those that a user might not be aware of
 This enables portability regardless of the execution environment being  distributed or having a shared filesystem. It also enable better provenance tracking
-CWL’s object model does not use strings to track file or directory inputs and outputs, instead using a simple dictionary of properties (“class: File” and “class: Directory”). These objects do not assign a path to a File or Directory until just prior to tool execution. Instead Files and Directory have a “location” identifier, and the name of the File or Directory is also stored separately, allowing the location IRI to be meaningful to the workflow engine.
+CWL’s object model does not use strings to track file or directory inputs and outputs, instead using a simple dictionary of properties (\verb|class: File| and \verb|class: Directory|). These objects do not assign a path to a File or Directory until just prior to tool execution. Instead Files and Directory have a \verb|location| identifier, and the name of the File or Directory is also stored separately, allowing the location IRI to be meaningful to the workflow engine.
+
 Alternatives:
 
 \subsubsection{file streaming is supported but not required}
 A common optimization pattern in hand written workflows
-If marked as such, CWL allows File inputs/outputs to be implemented using a named pipe, a.k.a “|”
+If marked as such, CWL allows File inputs/outputs to be implemented using a named pipe, a.k.a \verb=|=
 This allows workflow systems to speed up execution by streaming data into/out-of object stores or directly between tasks
-All “type: stdin”, “type: stdout”, and “type: stderr” Inputs/Output have this potential without further specification by the user. Otherwise they can add `streamable: true’ to any Input/Output of `type: File` or `type: File[]`
+All \verb|type: stdin|, \verb|type: stdout|, and \verb|type: stderr| Inputs/Output have this potential without further specification by the user. Otherwise they can add \verb|streamable: true| to any Input/Output of \verb|type: File| or \verb|type: File[]|.
 This was a simple thing to add to the CWL specification, so not adding it was not seriously considered. However, exploitation of this feature has only been done by one engine: toil-cwl-runner.
 
 \subsubsection{no tool to tool IP based communication}
@@ -111,23 +112,20 @@ There are many frameworks and libraries for service orchestration, users are enc
 While CWL is regular enough for automated conversion to/from, or programmatic assembly, we knew that users would still be writing/editing by hand (especially during the early phases of adoption) (Goal \#3)
 When a design decision came down to an option being more convenient for users versus implementers, we often chose the users. Planned revisions to the standards will include even more user focused design patterns.
 Many users of CWL will be causal and infrequently interacting with CWL. By favoring users we make the language more attractive and increase the likelihood of adoption
-Examples: map<> syntax simplification; YAML;
+Examples: \verb|map<>| syntax simplification; YAML;
 JSON? Can’t have comments ; new DSL? Harder to implement, not necessarily more readable for users. XML? gross.
-
-\subsubsection{Review of workflow constructs supported}
-(explain why and cross-reference the workflow patterns repository) See \url{https://github.com/common-workflow-library/cwl-patterns/tree/master/workflow_patterns_initiative}
 
 \subsubsection{Optional parts}
 
 To support a diverse ecosystem (Goal \#3). Some workflow engines may not want to / be able to implement all of the CWL syntax
 What:
-V1.0+: InlineJavascriptRequirement, SchemaDefRequirement, LoadListingRequirement, DockerRequirement, SoftwareRequirement, InitialWorkDirRequirement, EnvVarRequirement, ShellCommandRequirement, ResourceRequirement
-V1.1+: WorkReuse, NetworkAccess, InplaceUpdateRequirement, ToolTimeLimit
-V1.2+: (abstract) Operation processes (non-runnable, useful for provenance reporting from non-CWL systems), conditional execution of steps using `WorkflowStep.when`
+V1.0+: \verb|InlineJavascriptRequirement|, \verb|SchemaDefRequirement|, \verb|LoadListingRequirement|, \verb|DockerRequirement|, \verb|SoftwareRequirement|, \verb|InitialWorkDirRequirement|, \verb|EnvVarRequirement|, \verb|ShellCommandRequirement|, \verb|ResourceRequirement|
+V1.1+: \verb|WorkReuse|, \verb|NetworkAccess|, \verb|InplaceUpdateRequirement|, \verb|ToolTimeLimit|
+V1.2+: (abstract) \verb|Operation| processes (non-runnable, useful for provenance reporting from non-CWL systems), conditional execution of steps using \verb|when|
 
 One can use/implement the CWL CommandLineTool standard separate from the entire Workflow standard, if desired
 This allows engines and other CWL consumers/produces to make progressively more useful tools while being able to communicate clearly what they support to users (and to fail quickly if given a document they can’t fully execute)
-All of these features must be listed by the author of a CWL document, if used, except for conditional workflow steps in CWL v1.2+. Features mentioned under the “hints” section are allowed to be ignored by consumers of the document if they don’t (yet) support them. Features mentioned under “requirements” must be supported, and if they are not available then consumers of the document should fail early and inform the user why.
+All of these features must be listed by the author of a CWL document, if used, except for conditional workflow steps in CWL v1.2+. Features mentioned under the \verb|hints| section are allowed to be ignored by consumers of the document if they don’t (yet) support them. Features mentioned under \verb|requirements| must be supported, and if they are not available then consumers of the document should fail early and inform the user why.
 Feature detection by syntax (instead of these explicit feature flags) was considered and may be implemented in CWL 2.0 to simplify the syntax for the description author.
 
 \subsubsection{Linked data and external ontologies}
@@ -144,13 +142,13 @@ Optional, but recommended! Docker format, engine agnostic (Singularity, podman, 
 Software installation is said to be the hardest problem in bioinformatics and many other research fields
 Therefore CWL supports the specification of an recommended (or required) Docker format software container as part of the CommandLineTool specification
 This helps (but does not guarantee) reproducibility
-Under “DockerRequirement”, tool description authors can specify one of the following: the name of a docker/OCI format image from a registry (defaulting to hub.docker.com but others are allowed) ; a URL to a docker/OCI format image ; an in-place “Dockerfile” format recipe for Docker/OCI format image construction
+Under \verb|DockerRequirement|, tool description authors can specify one of the following: the name of a docker/OCI format image from a registry (defaulting to hub.docker.com but others are allowed) ; a URL to a docker/OCI format image ; an in-place “Dockerfile” format recipe for Docker/OCI format image construction
 When CWL began, the Open Container Initiative was in its infancy. It is planned that future versions of the CWL standards will refer to the OCI standards more directly. The Docker engine is not a requirement for fulfilling the “DockerRequirement”, any engine that support the Docker image format (directly or indirectly) is a valid choice by a CWL compliant engine; this includes Singularity, udocker,
 \subsubsection{Mechanism for extensions}
 Allows and encourages vendors/users to develop/use well marked extensions to the CWL standards
 As CWL aims to support features that are “common”ly used by people and “common”ly implemented by engines, it shouldn’t get in the way of those who want to build upon it
 Now that CWL is more stable and more widely deployed, getting vendors to experiment with new features and then learning from their experiences provides a better model for stable enhancement
-All extensions must be a URL (often abbreviated using the \$namespace feature) and preferably resolve to a web page with more information about the extension. Several features that exist in post v1.0 version of CWL came from vendor extensions: TimeLimit, WorkReuse (previously \url{http://arvados.org/cwl#ReuseRequirement} ), NetworkAccess, InplaceUpdateReqirement, LoadListingRequirement. Like the optional features of CWL, they can be specified under the “hints” section if they can be safely ignored, or under “requirements” if they are necessary for proper execution.
+All extensions must be a URL (often abbreviated using the \$namespace feature) and preferably resolve to a web page with more information about the extension. Several features that exist in post v1.0 version of CWL came from vendor extensions: \verb|TimeLimit|, \verb|WorkReuse| (previously \url{http://arvados.org/cwl#ReuseRequirement} ), \verb|NetworkAccess|, \verb|InplaceUpdateReqirement|, \verb|LoadListingRequirement|. Like the optional features of CWL, they can be specified under the \verb|hints| section if they can be safely ignored, or under \verb|requirements| if they are necessary for proper execution.
 The alternative would be secret extensions/changes that would be hard to detect prior to tool/workflow execution which would hamper reproducibility/ reusability.
 \subsubsection{conformance tests}
 Need to be able verify the behavior of the various CWL implementations (Goal \#2)
@@ -162,7 +160,7 @@ We wrote our own testing framework, but this is a prototype of a plugin to py.te
 As the CWL standards don’t aim to cover all possible needs especially when it comes to most extremely badly designed command line interfaces, a script language was chosen as an optional feature.
 Users may provide values for certain fields in CWL using ECMAScript 5.1 (commonly known as Javascript). What objects are available to them in that context is tightly defined; no cross talk is allowed; and the order of parsing is explicit
 This allows users to work around missing features without having to change the underlying program (which might not be possible or realistic). It also allows for cheap rearrangement of complex object trees without requiring scheduling a task and marshalling/unmarshalling data.
-Users must specify that they need the `InlineJavascriptRequirement` under features. To distinguish the javascript from literal strings, it is wrapped in `${ }` for  ECMAScript function body style, or `$( )` for ECMAScript Expression style.
+Users must specify that they need the \verb|InlineJavascriptRequirement| under features. To distinguish the javascript from literal strings, it is wrapped in \verb|${ }| for  ECMAScript function body style, or \verb|$( )| for ECMAScript Expression style.
 This has been a controversial feature. Many users (and the authors of the CWL standards themselves) would prefer to use Python, but the lack of secure Python VMs prevented this. Currently we are debating on how best to allow users to write CWL Expressions using newer versions of the ECMAScript standard while keeping backward compatibility. ECMAScript 5.1 is from 2011, but newer versions of ECMAScript are not completely backwards compatible with code that targets ECMAScript 5.1.
 \subsubsection{Separation of concerns}
 There are many audiences for a workflow or tool description and they can be divided into those who execute said description and those who write them.
@@ -186,7 +184,7 @@ This URI might be meaningful to the engine directly (like an object store path) 
 
 \subsection{Support levels for optional features in CWL runners circa 2024}
 % TODO: turn into a table
-`toil-cwl-runner`: all of CWL v1.0-v1.2; `InplaceUpdateRequirement` is only supported when using a shared filesystem with the ``--bypass-file-store`` option.
+\verb|toil-cwl-runner|: all of CWL v1.0-v1.2; \verb|InplaceUpdateRequirement| is only supported when using a shared filesystem with the \verb|--bypass-file-store| option.
 
 
 \section{The CWL standards support the 17 FAIR Principles}
@@ -194,29 +192,34 @@ It is one of the goals of the CWL project to assist workflow engines/platforms a
 
 Rather than attempting to conduct a quantitative study, we focus here on qualitative analysis as the FAIR Principles are just that, principles, and not specific metrics. For specific data types there are specific community led FAIR metrics, but there are no universal FAIR metrics (nor should there be, as “FAIR is not a standard”[4]).
 \subsection{To be Findable}
-\subsubsection{F1. “(meta)data are assigned a globally unique and persistent identifier”}
+\begin{itemize}
+\item F1. “(meta)data are assigned a globally unique and persistent identifier”
 In CWL, all items of type File, Directory, Workflow, and CommandLineTool have an identifier which can be “globally unique and eternally persistent” if available, or just locally meaningful. For example, the CWL reference implementation’s use of CWLProv generates random UUIDs for inputs, outputs, and intermediate values, but a workflow platform or service would use registered identifiers.
-\subsubsection{F2. “data are described with rich metadata (defined by R1 below)”}
+\item F2. “data are described with rich metadata (defined by R1 below)”
 The CWL standards prescribe how Workflow and CommandLineTool descriptions can have arbitrary embedded metadata in a structured way. For generic metadata it is recommend to use the schema.org vocabulary. While community or domain specific metadata is also allowed and encouraged, the CWL standards do not prescribe any particular metadata standard, as that is a decision for specific groups to develop and evolve.
-\subsubsection{F3. “metadata clearly and explicitly include the identifier of the data it describes”}
+\item F3. “metadata clearly and explicitly include the identifier of the data it describes”
 This is automatic for CWL documents, as the metadata is embedded in the data it describes.
-\subsubsection{F4. “(meta)data are registered or indexed in a searchable resource”}
+\item F4. “(meta)data are registered or indexed in a searchable resource”
 There are several registries of workflows, and one in particular (Workflow Hub) has chosen the CWL object model for their workflow metadata model, even for workflows not written using the CWL standards.
+\end{itemize}
 \subsection{To be Accessible}
-\subsubsection{A1. “(meta)data are retrievable by their identifier using a standardized communications protocol”}
+\begin{itemize}
+\item A1. “(meta)data are retrievable by their identifier using a standardized communications protocol”
 There is no official API for retrieving a CWL document via an identifier. Popular choices include HTTP and the “GA4GH Tool Registry API” (also known as GA4GH TRS). By retrieving a CWL description (data) one then has access to the embedded metadata (if any).
 
 For retrieval of input data for the execution of a CWL workflow or tool, CWL allows for any URI scheme. HTTP(S) is available in all known CWL implementations (modulo local network policies) and many implementations support the relevant object storage protocols. GA4GH has an API specification (GA4GH DRS) for services that convert a data identifier into a platform (and perhaps region) specific URI. Using any of these protocols, their future versions, or entirely new protocols, requires no changes to the CWL standards as long as URI/IRIs are available.
-\subsubsection{A1.1 “the protocol is open, free, and universally implementable”}
+\item A1.1 “the protocol is open, free, and universally implementable”
 HTTP, GA4GH TRS, and GA4GH DRS all meet this requirement.
-\subsubsection{A1.2 “the protocol allows for an authentication and authorization procedure, where necessary”}
+\item A1.2 “the protocol allows for an authentication and authorization procedure, where necessary”
 HTTP meets this requirement. For GA4GH TRS they state that “GA4GH recommends the use of the OAuth 2.0 framework (RFC 6749) for authentication and authorization. It is also recommended that implementations of this standard implement and follow the GA4GH Authentication and Authorization Infrastructure (AAI) standard.
 While the TRS standard itself does not define any behaviour specific to authorization, given that it hosts and shares publicly available workflows. For future expansion, we recommend that if authorization is needed, that it follows the OAuth 2.0 recommendations as defined above.”
 For GA4GH DRS “The DRS implementation is responsible for defining and enforcing an authorization policy that determines which users are allowed to make which requests. GA4GH recommends that DRS implementations use an OAuth 2.0 bearer token, although they can choose other mechanisms if appropriate.”
-\subsubsection{A2. “metadata are accessible, even when the data are no longer available”}
+\item A2. “metadata are accessible, even when the data are no longer available”
 Not a guarantee for GA4GH TRS, DRS, or plain HTTP. Possibly guaranteed for workflows registered with the Workflow Hub.
+\end{itemize}
 \subsection{To be Interoperable}
-\subsubsection{I1. (meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation.}
+\begin{itemize}
+\item I1. (meta)data use a formal, accessible, shared, and broadly applicable language for knowledge representation.
 Tool and workflow descriptions that conform to the CWL standards are transformable (inclusive of any embedded metadata) to JSON-LD as a pleasant (and purposeful) side effect of the CWL standards being defined in Salad schema language. The reference implementation of CWL has such a capability.
 
 “There are three parts to [the CWLProv] profile:
@@ -224,24 +227,337 @@ Tool and workflow descriptions that conform to the CWL standards are transformab
 	CWLProv BagIt, how the resources of an execution are packaged using BagIt
 	CWLProv Research Object, how the resources of an execution are related in an RO
 	CWLProv PROV, how the workflow execution provenance is modelled in W3C PROV“
-\subsubsection{I2. (meta)data use vocabularies that follow FAIR principles}
+\item I2. (meta)data use vocabularies that follow FAIR principles
 The vocabularies used in CWL are RDF schema, Salad (which uses Dublin Core terms, RDF, XML, and XSD). Examining these vocabularies in the context of the FAIR principles is out of scope for this paper. The vocabularies used in CWLProv are CWL, ResearchObject, BagIt, and the PROV-Data Model (PROV-DM). User provided vocabularies, such as identifiers for data format types (like the EDAM Ontology), or CWL document metadata (like schema.org), may or may not meet the FAIR principles.
-\subsubsection{I3. (meta)data include qualified references to other (meta)data}
+\item I3. (meta)data include qualified references to other (meta)data
 All references in the CWL and CWLProv object models are qualified.
+\end{itemize}
 \subsection{To be Reusable}
-\subsubsection{R1. meta(data) are richly described with a plurality of accurate and relevant attributes}
-The CWL standards explicitly support user provided metadata and specifically using the schema.org ontology. There are a number of other specific attributes available in CWL documents as well: ‘label’, ‘doc’, ‘SoftwareRequirement’.
-\subsubsection{R1.1. (meta)data are released with a clear and accessible data usage license}
-The CWL standards and schemas are released under the Apache 2.0 open source license; likewise the CWLProv profile. Individual CWL documents can embed a license reference using a schema.org annotation which is picked up and propagated by Workflow Hub and DockStore
-\subsubsection{R1.2. (meta)data are associated with detailed provenance}
+\begin{itemize}
+\item R1. meta(data) are richly described with a plurality of accurate and relevant attributes
+The CWL standards explicitly support user provided metadata and specifically using the schema.org ontology. There are a number of other specific attributes available in CWL documents as well: \verb|label|, \verb|doc|, \verb|SoftwareRequirement|.
+\item R1.1. (meta)data are released with a clear and accessible data usage license
+The CWL standards and schemas are released under the Apache 2.0 open source license; likewise the CWLProv profile. Individual CWL documents can embed a license reference using a schema.org annotation which is picked up and propagated by Workflow Hub and DockStore.
+\item R1.2. (meta)data are associated with detailed provenance
 This is not required by the CWL standards. The CWLProv profile is one way for workflow engines/platforms to represent the provenance of a CWL workflow execution, its inputs, and the results.
-\subsubsection{R1.3. (meta)data meet domain-relevant community standards}
+\item R1.3. (meta)data meet domain-relevant community standards
 For many (sub)domains, CWL is the relevant standard for workflow and tool description.
+\end{itemize}
 \subsection{Areas of improvement}
-F1. A default source for identifiers of CWL tools and workflows could be decided upon and standardized. Likewise there could be an agreed upon registration method and lookup mechanism for these identifiers. This could be a single source or federated.
-F2. Pass through of metadata related to workflow inputs: For data types that can’t embed metadata, or the metadata was provided separately, there is not yet a standardized construct to pass along metadata through a workflow and attach it (entirely, or by parts) to one or more of the outputs.  In 2018-2019 there was a proposal to accomplish this in the context of CWLProv, but it has yet to be implemented. Note, that this proposal does not require the modification of the CWL standards as it uses CWL’s extensible metadata feature.
-A1. A future version of the GA4GH Tool Discovery API (or a different API) could support metadata retrieval for a given identifier. Using HTTP Content Negotiation one could imagine a simple standard for getting the metadata for a given identifier if an agreement was made and there was wide adoption.
+\begin{itemize}
+\item F1. A default source for identifiers of CWL tools and workflows could be decided upon and standardized. Likewise there could be an agreed upon registration method and lookup mechanism for these identifiers. This could be a single source or federated.
+\item F2. Pass through of metadata related to workflow inputs: For data types that can’t embed metadata, or the metadata was provided separately, there is not yet a standardized construct to pass along metadata through a workflow and attach it (entirely, or by parts) to one or more of the outputs.  In 2018-2019 there was a proposal to accomplish this in the context of CWLProv, but it has yet to be implemented. Note, that this proposal does not require the modification of the CWL standards as it uses CWL’s extensible metadata feature.
+\item A1. A future version of the GA4GH Tool Discovery API (or a different API) could support metadata retrieval for a given identifier. Using HTTP Content Negotiation one could imagine a simple standard for getting the metadata for a given identifier if an agreement was made and there was wide adoption.
 Neither the CWL standards nor the CWLProv profile requires that metadata about workflow/tool inputs is acquired at/before execution time. However any CWL/CWLProv system could do such a thing without needing to amend either the CWL standards or the CWLProv profile.
+\end{itemize}
+\section{Workflow patterns}
+
+Members of the Workflow Patterns initiative have named and defined many type of processes found in workflow languages or in business process technologies
+\cite{van_der_aalst_workflow_2003,russell_workflow_resource_2004,russell_exception_2006,russell_workflow_data_2004,suriadi_event_2017}. In this section I will review with of these are supported by the CWL standards.
+
+Note: the WPI's definition of a workflow is much broader than the type of workflows CWL aims to describe. As mentioned before, CWL targets workflows made of command line tools with no real-time communication between steps nor outside services. WPI's definition of workflows includes (business) process modeling which have many control-flow features.
+
+\subsection{Control patterns}
+
+Note: CWL is a data-driven (dataflow) workflow standard. These patterns use control-flow language and thus we speak of the equivalent data-flow constructs. There is no concept of "thread of control" in CWL.
+
+Of the 43 WPI Workflow Control patterns, 8 patterns are supported by CWL v1.2 or earlier and 35 patterns are unsupported.
+
+\subsubsection{Basic Control Flow Patterns}
+\begin{itemize}
+
+\item \href{http://www.workflowpatterns.com/patterns/control/basic/wcp1.php}{Pattern 1 (Sequence)}: Yes. CWL is a DAG based workflow language with explicit dependencies between steps.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/basic/wcp2.php}{Pattern 2 (Parallel Split)}: Yes. Anytime a step in a CWL workflow has all of its inputs available it is allowed to be executed.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/basic/wcp3.php}{Pattern 3 (Synchronization)}: Yes. One can have a step in a CWL workflow that requires inputs from the result of multiple other steps. Downstream steps that require the output of that step (and their descendents) will not be available for execution until the combination step has finished.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/basic/wcp4.php}{Pattern 4 (Exclusive choice)}: Yes. No explicit construct, but can be achieved by marking the two downstream steps with the \verb|when| CWL conditional step execution feature where the logic for one step's \verb|when| field is the inverse of the other step's \verb|when| field. If there is a downstream workflow step that would inherit an value from one of the exclusive choice steps into the same incoming input port, then \verb|pickValue: the_only_non_null| may be helpful to ensure that both "exclusive" choices didn't execute due to a misconfiguration in their \verb|when| logics.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/basic/wcp5.php}{Pattern 5 (Simple Merge)}: Yes. Any CWL workflow can include another workflow as a step, thus allowing re-use.
+\end{itemize}
+\subsubsection{Advanced Branching and Synchronization Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/control/advanced_branching/wcp6.php}{Pattern 6 (Multi-Choice)}: No, as there is not a construct in CWL to implement this directly, as required by the WPI definition of this pattern. Can be emulated using the CWL v1.2 \verb|when| feature similar to the method to implement Pattern 4 (Exclusive choice), but with 3 or more steps using matched \verb|when| markers.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/advanced_branching/wcp7.php}{Pattern 7 (Structured Synchronizing Merge)}: No, as there is not a construct in CWL to implement this directly, as required by the WPI definition of this pattern. One way to achieve this is to hide the choice inside a sub-workflow which will provide a stable set of outputs to connect to other steps. As this pattern implies the conditional execution of prior steps, the use of the \verb|pickValue| CWL construct in the merge step will likely be useful.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/advanced_branching/wcp8.php}{Pattern 8 (Multi-Merge)}: No, as CWL does not have a construct for the WPI Multi-Choice pattern, which is a pre-requisite for the WPI definition of the Multi-Merge pattern. However, any CWL step can rely on inputs from multiple other steps.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/advanced_branching/wcp9.php}{Pattern 9 (Structured Discriminator)}: No. CWL does not support canceling the execution of of some other task(s) according to some criteria. Individual CWL procesess can cancel themselves by throwing an exception in a CWL Expression, but this can cause premature failure of the entire workflow if not carefully planned for in downstream steps.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp28.php}{Pattern 28 (Blocking Discriminator)}: No. State in CWL is read-only, therefore this pattern is not supported as it would be impossible to reset the discriminator. This pattern is likely not possible in CWL for other reasons as well.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp29.php}{Pattern 29 (Cancelling Discriminator)}: No. CWL does not support canceling the execution of tasks according to some criteria. Additionally, all variables in CWL are read-only so there is no ability to "reset [a] construct".
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp30.php}{Pattern 30 (Structured Partial Join)}: No. CWL does not support canceling the execution of tasks according to some dynamic criteria.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp31.php}{Pattern 31 (Blocking Partial Join)}: No. CWL does not support re-ordering of tasks.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp32.php}{Pattern 32 (Cancelling Partial Join)}: No. CWL does not support canceling the execution of tasks according to some criteria.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp33.php}{Pattern 33 (Generalized AND-Join)}: No. CWL is a dataflow workflow language, not a control-flow workflow language. All inputs must be known at the time of workflow enactment.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp37.php}{Pattern 37 (Local Synchronizing Merge)}: No. CWL is a dataflow workflow language, not a control-flow workflow language. A CWL step can not accumulate inputs (or continue to emit outputs) over time. CWL steps are only executed once (unless \verb|scatter| is used) and the results of that step are only made available once execution has finished. See also the evaluation of CWL against Pattern 7 (Structured Synchronizing Merge).
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp38.php}{Pattern 38 (General Synchronizing Merge)}: Yes, as this was easy to implement due to two factors related to CWL being a dataflow workflow language and not a control-flow workflow language.
+
+1. CWL steps are only executed once (unless \verb|scatter| is used) and the results of that step are only made available once execution has finished.
+2. A CWL step is available for execution when all of the upstream steps have been executed (or permanently skipped due to the use of the \verb|when| construct).
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp41.php}{Pattern 41 (Thread Merge)}: No, CWL has no concept of threads at the workflow language level. The underlying applications may use POSIX threads, but that is not managed by CWL.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp42.php}{Pattern 42 (Thread Split)}: No, CWL has no concept of threads at the workflow language level. The underlying applications may use POSIX threads, but that is not managed by CWL.
+\end{itemize}
+\subsubsection{Multiple Instance Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/control/multiple_instance/wcp12.php}{Pattern 12 (Multiple Instances without Synchronization)}: No. While CWL has the \verb|scatter| construct, using this implies an implicit "gather"ing of the results before downstreams steps can use the results. This means that execution of subsequent steps is delayed for the slowest execution of the the \verb|scatter|ed tasks, even if that particular result isn't needed right away. Additionally, CWL v1.2 does not have a \verb|loop| construct, which would be another way one could implement this pattern; such a construct is available as a widely-implemented extension \footnote{\url{https://cwltool.readthedocs.io/en/latest/loop.html}} and has been proposed for inclusion as part of the drafting process for CWL v1.3.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/multiple_instance/wcp13.ph}{Pattern 13 (Multiple Instances with a priori Design-Time Knowledge)}: No. There is no construct in CWL v1.2 to execute a step or task a specific N number of times, where N is a concrete number (like 23) specified by the workflow author. Additionally, CWL v1.2 does not have a \verb|loop| construct, which would be another way one could implement this pattern. Such a construct is available as a widely-implemented extension and has been proposed for inclusion as part of the drafting process for CWL v1.3
+
+\item \href{http://www.workflowpatterns.com/patterns/control/multiple_instance/wcp14.php}{Pattern 14 (Multiple Instances with a priori Run-Time Knowledge)}: Yes. CWL has the \verb|scatter| construct which allows a compact directive that a given step is to be executed multiple times where most inputs are fixed except for those \verb|scatter|ed specified inputs.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/multiple_instance/wcp15.php}{Pattern 15 (Multiple Instances without a priori Run-Time Knowledge)}: No. CWL lacks any construct that can spawn additional tasks dynamically according to criteria.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp34.php}{Pattern 34 (Static Partial Join for Multiple Instances)}: No. CWL does not have the ability to allow execution of a downstream step when N of M tasks have completed.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp35.php}{Pattern 35 (Cancelling Partial Join for Multiple Instances)}: No. CWL does not support canceling the execution of tasks according to some criteria.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp36.php}{Pattern 36 (Dynamic Partial Join for Multiple Instances)}: No. CWL lacks any construct that can spawn additional tasks dynamically according to criteria.
+\end{itemize}
+\subsubsection{State-based Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/control/state/wcp16.php}{Pattern 16 (Deferred Choice)}: No. The CWL v1.2+ conditional workflow step ability is only based upon explict inputs to the workflow step. Additionally, in CWL there is no concept of an "operating environment".
+
+\item \href{http://www.workflowpatterns.com/patterns/control/state/wcp17.php}{Pattern 17 (Interleaved Parallel Routing)}: No. Ordering of tasks in CWL is not fixed, but the dependecy graph is explicit. There is no CWl construct to limit the number of parallel tasks being executed, that is up to the workflow engine.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/state/wcp18.php}{Pattern 18 (Milestone)}: No. In CWL, parameter values are read-only; they can not change over time. It is not possible to query the state of another CWL task. A step in a CWL workflow can only recieve specific outputs from other steps that have already completed, and this wiring is fixed prior to workflow execution.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp39.php}{Pattern 39 (Critical Section)}: No. Sub sections of CWL workflows can not be bidirectionally connected. One could depend on another (by putting the other in a sub-workflow, if it isn't one already). It is not possible to query the state of another CWL task. A step in a CWL workflow can only recieve specific outputs from other steps that have already completed, and this wiring is fixed prior to workflow execution.
+
+\item \item \href{http://www.workflowpatterns.com/patterns/control/new/wcp40.php}{Pattern 40 (Interleaved Routing)}: No. Ordering of tasks in CWL is not fixed, but the dependecy graph is explicit. There is no CWl construct to limit the number of parallel tasks being executed, that is up to the workflow engine.
+\end{itemize}
+\subsubsection{Cancellation and Force Completion Patterns}
+\href{http://www.workflowpatterns.com/patterns/control/cancellation/wcp19.php}{Pattern 19 (Cancel Task)}, \href{http://www.workflowpatterns.com/patterns/control/cancellation/wcp20.php}{Pattern 20 (Cancel Case)}, \href{http://www.workflowpatterns.com/patterns/control/new/wcp25.php}{Pattern 25 (Cancel Region)}, \href{http://www.workflowpatterns.com/patterns/control/new/wcp26.php}{Pattern 26 (Cancel Multiple Instance Task)}, \href{http://www.workflowpatterns.com/patterns/control/new/wcp27.php}{Pattern 27 (Complete Multiple Instance Task)}: No. CWL does not support canceling the execution of tasks according to some criteria.
+\subsubsection{Iteration Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/control/structural/wcp10.php}{Pattern 10 (Arbitrary Cycles)}: No. CWL v1.2 has no loop construct. TODO: confirm with \verb|cwltool:Loop| can implement this.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp21.php}{Pattern 21 (Structured Loop)}: No. CWL v1.2 has no loop construct. TODO: confirm with \verb|cwltool:Loop| can implement this.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp22.php}{Pattern 22 (Recursion)}: No. CWL does not support recursion.
+\end{itemize}
+\subsubsection{Termination Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/control/structural/wcp11.php}{Pattern 11 (Implicit Termination)}: Yes. CWL workflows are finished when all of the required outputs are available.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp43.php}{Pattern 43 (Explicit Termination)}: No. CWL does not have an explicit "end node" construct.
+\end{itemize}
+\subsubsection{Trigger Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp23.php}{Pattern 23 (Transient Trigger)}: No. CWL does not support the concept of triggers or signals.
+
+\item \href{http://www.workflowpatterns.com/patterns/control/new/wcp24.php}{Pattern 24 (Persistent Trigger)}: No. CWL does not support the concept of triggers or signals.
+\end{itemize}
+\subsection{Resource patterns}
+
+Note: Most of the WPI resource handling patterns concern the allocation of business tasks to human resources.
+
+The CWL standards define a language to describe batch computation tasks and workflows made from these tasks. CWL purposely does not include non-computational tasks. Distribution of tasks in CWL is up to the implementing workflow engine to comply with any specified computational resource requirements (which are mandatory) or hints (which are optional).
+
+While only 2 of the 43 of the WPI Resource Patterns have an analogue in the CWL standards, many of these other patterns are used by CWL compatible workflow management systems; either controlled by algorithmic choices or user/operator input.
+
+\subsubsection{Creation Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp1.php}{Pattern 1 (Direct Distribution)}:  No. There is no concept of a (computational) resource identity in the CWL standards. There is no method to specify that a given task should be execution on a specific computer.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp2.php}{Pattern 2 (Role-Based Distribution)}: No.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp3.php}{Pattern 3 (Deferred Distribution)}:  No. The choice of up front scheduling, deferred scheduling, or hybrid scheduling is not a concept in CWL. The CWL standards do not specify a scheduling modality nor do they forbid any scheduling modality.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp4.php}{Pattern 4 (Authorization)}: No.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp5.php}{Pattern 5 (Separation of Duties)}: No.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp6.php}{Pattern 6 (Case Handling)}: No. The CWL standards have no concept of a case.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp7.php}{Pattern 7 (Retain Familiar)}: No. However a workflow engine is allowed to schedule/place jobs to take advantage of data locality as an optimization.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp8.php}{Pattern 8 (Capability-Based Distribution)}: Yes, except there is no concept of "organisational model" in CWL. CWL `CommandLineTool`s can define minimum needed data storage and memory needs, along with the minimum number of CPU cores for efficient computation. These \verb|ResourceRequirements| influence task placement.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp9.php}{Pattern 9 (History-Based Distribution)}: No. Like "Pattern 7 (Retain Faimiliar)", this could be implemented by a workflow engine to optimize based upon the availability of intermediate results left over (or nearby) by a previous task.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp10.php}{Pattern 10 (Organisational Distribution)}: No. CWL has no concept of an "organization" or any entity similar to that.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/creation/wrp11.php}{Pattern 11 (Automatic Execution)}: By definition, all tasks in CWL are automatic as CWL has no concept of sending a task to a human.
+\end{itemize}
+\subsubsection{Push Patterns}
+
+\href{http://www.workflowpatterns.com/patterns/resource/push/wrp12.php}{Pattern 12 (Distribution by Offer - Single Resource)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp13.php}{Pattern 13 (Distribution by Offer - Multiple Resources)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp14.php}{Pattern 14 (Distribution by Allocation - Single Resource)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp15.php}{Pattern 15 (Random Allocation)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp16.php}{Pattern 16 (Round Robin Allocation)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp17.php}{Pattern 17 (Shortest Queue)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp18.php}{Pattern 18 (Early Distribution)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp19.php}{Pattern 19 (Distribution on Enablement)}, \href{http://www.workflowpatterns.com/patterns/resource/push/wrp20.php}{Pattern 20 (Late Distribution)}: No.
+
+\subsubsection{Pull Patterns}
+
+\href{http://www.workflowpatterns.com/patterns/resource/pull/wrp21.php}{Pattern 21 (Resource-Initiated Allocation)}, \href{http://www.workflowpatterns.com/patterns/resource/pull/wrp22.php}{Pattern 22 (Resource-Initiated Execution - Allocated Work Item)}, \href{http://www.workflowpatterns.com/patterns/resource/pull/wrp23.php}{Pattern 23 (Resource-Initiated Execution - Offered Work Item)}, \href{http://www.workflowpatterns.com/patterns/resource/pull/wrp24.php}{Pattern 24 (System-Determined Work Queue Content)}, \href{http://www.workflowpatterns.com/patterns/resource/pull/wrp25.php}{Pattern 25 (Resource-Determined Work Queue Content)}, \href{http://www.workflowpatterns.com/patterns/resource/pull/wrp26.php}{Pattern 26 (Selection Autonomy)}, \href{http://www.workflowpatterns.com/patterns/resource/pull/wrp21.php}{Pattern 21 (Resource-Initiated Allocation)}: No.
+
+\subsubsection{Detour Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp27.php}{Pattern 27 (Delegation)}, \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp28.php}{Pattern 28 (Escalation)}, \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp29.php}{Pattern 29 (Deallocation)}, \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp30.php}{Pattern 30 (Stateful Reallocation)}, \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp31.php}{Pattern 31 (Stateless Reallocation)}, \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp32.php}{Pattern 32 (Suspension/Resumption)}, \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp33.php}{Pattern 33 (Skip)}: No.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp34.php}{Pattern 34 (Redo)}:  No. There is no method in CWL for a task to specify that some *other* already completed task must be redone. However, if a \verb|CommandLineTool| exits with an return code indicated in the specified \verb|temporaryFailCodes| list, then the task is available for retrying again. The CWL standards do not specify how many retries (if any) should be attempted.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/detour/wrp35.php}{Pattern 35 (Pre-Do)}: No. In CWL it is assumed that once a task has all of its inputs it is made available for execution.
+\end{itemize}
+\subsubsection{Auto-Start Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/resource/autostart/wrp36.php}{Pattern 36 (Commencement on Creation)}, \href{http://www.workflowpatterns.com/patterns/resource/autostart/wrp37.php}{Pattern 37 (Commencement on Allocation)}: No.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/autostart/wrp38.php}{Pattern 38 (Piled Execution)}: No. There is no specific construct in CWL to force pipelined execution, however the presence of \verb|streamable: true| on matching inputs/outputs of adjacent tasks is a strong hint for those system who wish to do so.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/autostart/wrp39.php}{Pattern 39 (Chained Execution)}: No.
+\end{itemize}
+\subsubsection{Visibility Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/resource/visibility/wrp40.php}{Pattern 40 (Configurable Unallocated Work Item Visibility)}: No.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/visibility/wrp41.php}{Pattern 41 (Configurable Allocated Work Item Visibility)}: No.
+\end{itemize}
+\subsubsection{Multiple Resource Patterns}
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/resource/multiple_resources/wrp42.php}{Pattern 42 (Simultaneous Execution)}: No, there is no explicit CWL construct for this. It is assumed that parallel execution, when possible, is wanted by the user. All known CWL implementations support parallel execution, and almost all of them do so by default.
+
+\item \href{http://www.workflowpatterns.com/patterns/resource/multiple_resources/wrp43.php}{Pattern 43 (Additional Resources)}: No.
+\end{itemize}
+
+\subsection{Data patterns}
+
+Of the 40 WPI Workflow Data patterns, 17 patterns are supported by CWL v1.2 or earlier and 23 patterns are unsupported.
+
+\begin{itemize}
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp1.php}{Pattern 1 (Task Data)}: Yes, you can have a variable or value defined in a \verb|CommandLineTool|, \verb|ExpressionTool|, or \verb|Operation| that is not visible to other CWL Processes. They are initialized with a value provided by the Process author.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp2.php}{Pattern 2 (Block Data)}:
+
+"Data can be explicitly declared at block task level with block task level scoping" -> Yes, one can declare an extra variable at the step level or sub-workflow level.
+
+"Facilities exist for formal parameter passing to and from a block" -> sub-Processes can inherit a step level variable when it is connected to one of the Process’s inputs. They cannot access any given step-level input by name or any other mechanism, only by its own defined input parameters. Arbitrary access to block level parameters from another block is not possible in CWL. The only outputs from a step are the outputs from the underlying Process that have been marked for export. For sub-workflows, their steps may connect workflow-level data (inputs parameters) to a specific sub-Processes by identifiers. The only data from a sub-workflow that is available to a sibling Process or the parent Workflow are the explicit output parameters that connect to specific step outputs in the sub-Workflow.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp3.php}{Pattern 3 (Scope Data)}: No. CWL does not support Scope Data as scopes are defined as not creating a new address space; the closest approximation (a CWL sub-Workflow) does create a new address space.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp4.php}{Pattern 4 (Multiple Instance Data)}: 
+
+"The data element is capable of being replicated or partitioned across multiple tasks": Yes.
+
+"Each of these data instances exist in their own address space": Yes.
+
+A Process can be run with unique data inputs multiple times in a CWL workflow and multiple times in the same step when using the ‘scatter’ feature. Each run of that Process has access to only the specific data that was connected to it, and not to the data from other runs.
+
+"The instances are able to be accessed from a higher level in the process hierarchy" Only after execution is finished, and only for the explicit output values, yes.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp5.php}{Pattern 5 (Case Data)}: No, in CWL each Process only has access to its own defined inputs. Those inputs might be connected to Workflow-scope inputs (or the outputs from other steps) but there is no “global” or case namespace accessible from all levels of a workflow.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp6.php}{Pattern 6 (Folder Data)}: No. As CWL does not have a Case Data concept, it can not have a Folder Data concept either.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp7.php}{Pattern 7 (Workflow Data)}: Yes, all steps can reference workflow level inputs (including inputs with default values that are rarely overridden by users) in setting up the inputs to their Process. However, inside those Processes there is no visibility into the step level or workflow level namespaces. Only those data values that have been propagated to the Process via one of its own named inputs are available.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/visibility/wdp8.php}{Pattern 8 (Environment Data)}: No. There is no CWL construct for Environment Data. If network access is allowed by the executor, then the applications executed by CommandLineTools can access external data, though this is not advised for repeatability and resiliency reasons. Other sources of data gathering besides IP network access by CommandLineTools are possible, but not guaranteed by the CWL standards. They would certainly not be portable and such are not recommended.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/internal/wdp9.php}{Pattern 9 (Task to Task)}: Yes, CWL supports Task to Task data communication via distinct data channels. That is, CWL Processes can inherit data from another Process and their outputs can in turn become inputs to other Processes, all defined by the `in` mapping in each CWL Workflow step. Concurrency is only an issue when \verb|InplaceUpdateRequirement| is used.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/internal/wdp10.php}{Pattern 10 (Block Task to Sub-Workflow Decomposition)}: Yes, step level inputs are connected to sub-Workflows and only explicit step level values are connected to the pre-defined sub-workflow inputs.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/internal/wdp11.php}{Pattern 11 (Sub-Workflow Decomposition to Block Task)}: Yes, "[d]ata elements at sub-workflow level can be passed to or made accessible in the corresponding block task" via the \verb|outputs| section in a CWL (sub-)Workflow step definition.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/internal/wdp12.php}{Pattern 12 (To Multiple Instance Task)}:
+
+"Multiple instance tasks directly supported". Yes.
+
+"Data elements can be passed from an atomic task to all instances of a multiple instance task". Yes, via \verb|scatter|.
+
+"Workflow handles synchronization of data passing and any necessary data replication" Yes, this is a defined responsibility of a CWL compliant workflow engine
+
+"Facilities are available to allocate sections of an aggregate data element to specific task instances". Yes.
+
+"Data elements in each task instance are independent of those in other task instances". Yes
+
+\item \href{http://www.workflowpatterns.com/patterns/data/internal/wdp13.php}{Pattern 13 (From Multiple Instance Task)}:
+
+"Multiple instance tasks directly supported". Yes
+
+"Data elements can be aggregated from multiple task instances and forwarded to subsequent task instance(s)" Yes, via an implicit gather after the execution of a CWL Workflow step marked with \verb|scatter|.
+
+"Workflow handles synchronization of data passing and any necessary data replication". Yes, this is a defined responsibility of a CWL compliant workflow engine
+
+\item \href{http://www.workflowpatterns.com/patterns/data/internal/wdp14.php}{Pattern 14 (Case to Case)}: No, CWL explicitly and purposefully does not support interactions between concurrently executed Processes. CWL is not a service orchestration language. There is no CWL construct to say that two or more Processes should execute simultaneously or be overlapping. The software run by CommandLineTool processes might communicate data with an external service that might allow for exchanging data between CommandLineTool Processes that might be coincidentally executing concurrently. However, this is highly not recommended nor it is portable. There is a \href{https://github.com/common-workflow-language/cwltool#running-mpi-based-tools-that-need-to-be-launched}{proposal} for an addition to a future version of the CWL standards of a \verb|MPIRequirement| that is available via a special flag in the CWL reference runner that achieves a similar functionality for a single CommandLineTool that should be executed on many nodes concurrently with intra-node communication set up by a system compliant with the MPI standard.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/external/wdp15.php}{Pattern 15 (Task to Environment - Push)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp16.php}{Pattern 16 (Environment to Task - Pull)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp19.php}{Pattern 19 (Case to Environment - Push)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp20.php}{Pattern 20 (Environment to Case - Pull)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp23.php}{Pattern 23 (Workflow to Environment - Push)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp24.php}{Pattern 24 (Environment to Workflow - Pull)}: No. This is not a feature of CWL. A CommandLineTool Process could communicate with an external service or resource via IP networking, but this is not explicitly supported by CWL and is not recommended. Interactions with stateful services are features of other workflow languages, like the \href{https://lists.apache.org/thread.html/r19322d54fd6aae5778aff46717dea2fbd37c3b64571300ad9cee0191%40%3Cdev.taverna.apache.org%3E}{now-defunct Taverna}, but they entail significant complexity and implementation costs to handle error states and other common challenges.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/external/wdp17.php}{Pattern 17 (Environment to Task - Push)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp18.php}{Pattern 18 (Task to Environment - Pull)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp21.php}{Pattern 21 (Environment to Case - Push)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp22.php}{Pattern 22 (Case to Environment - Pull)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp25.php}{Pattern 25 (Environment to Workflow - Push)}, \href{http://www.workflowpatterns.com/patterns/data/external/wdp26.php}{Pattern 26 (Workflow to Environment - Pull)}: No. While the CWL \verb|NetworkAccess| requirement enables a CommandLineTool to be marked as requiring network (IP) access, the CWL standards state that “Enabling network access does not imply a publically routable IP address or the ability to accept inbound connections.”
+
+\item \href{http://www.workflowpatterns.com/patterns/data/mechanisms/wdp27.php}{Pattern 27 (Data Transfer by Value - Incoming)}: Yes. The Processes connected to each step in a CWL workflow receive data by value to each of their required input parameters and zero or more of their optional input parameters.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/mechanisms/wdp28.php}{Pattern 28 (Data Transfer by Value - Outgoing)}: Yes, the results from a CWL Process are available as named outputs for connecting to the inputs of other Processes (and as final Workflow outputs).
+
+\item \href{http://www.workflowpatterns.com/patterns/data/mechanisms/wdp29.php}{Pattern 29 (Data Transfer - Copy In/Copy Out)}: No. In CWL we do not overwrite prior data except when the optional \verb|InplaceUpdateRequirement| is used. Even then there isn’t a copy, the specified Files and Directories are directly modified by the CommandLineTool.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/mechanisms/wdp30.php}{Pattern 30 (Data Transfer by Reference - Unlocked)}, \href{http://www.workflowpatterns.com/patterns/data/mechanisms/wdp31.php}{Pattern 31 (Data Transfer by Reference - With Lock)}: 
+No. While the CWL object model does use IRIs/URIs \verb|location|s to identify specific File and Directories, those underlying bitstreams are invariant unless \verb|InplaceUpdateRequirement| is used. Those \verb|location|s are transformed to local file paths just prior to CommandLineTool execution.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/mechanisms/wdp32.php}{Pattern 32 (Data Transformation - Input)}: Yes. There are many opportunities to transform data in CWL. In CWL Workflow step definitions once can extract a subset or perform another transformation using the \verb|valueFrom| field with a CWL Expression or CWL Parameter Reference.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/mechanisms/wdp33.php}{Pattern 33 (Data Transformation - Output)}: No. As a workaround, another Process (ExpressionTool, CommandLineTool, or sub-Workflow) can be used to modify an output before further use. Within a CommandLineTool Process the \verb|outputEval| field can do modifications.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/routing/wdp34.php}{Pattern 34 (Task Precondition - Data Existence)}: Yes. This is the basis for task dependency in CWL.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/routing/wdp35.php}{Pattern 35 (Task Precondition - Data Value)}: No. Once a Process has completed then all of its named outputs are available to sibling Workflow steps. While these can be evaluated using the new \verb|when| field, this only decides if execution can take place. It does not delay execution as there is no capacity to update the inputs later; only to make new inputs under different steps.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/routing/wdp36.php}{Pattern 36 (Task Postcondition - Data Existence)}, \href{http://www.workflowpatterns.com/patterns/data/routing/wdp37.php}{Pattern 37 (Task Postcondition - Data Value)}: No. CommandLineTools and ExpressionTools terminate when their underlying tools finish execution. (sub-)Workflows terminate when all steps required for the outputs have finished. While the outputs can be examined in a CWL Expression and an exception thrown if they do not meet the given requirements, this does not cause continued execution or re-execution, but a permanent failure of the Process.
+
+\item \href{http://www.workflowpatterns.com/patterns/data/routing/wdp38.php}{Pattern 38 (Event-Based Task Trigger)}, \href{http://www.workflowpatterns.com/patterns/data/routing/wdp39.php}{Pattern 39 (Data-Based Task Trigger)}: No, this is not part of the CWL standards. But another system could initiate the execution of a CWL Process based upon an event outside the CWL Process description itself (or via an unofficial extension to the CWL standards).
+
+\item \href{http://www.workflowpatterns.com/patterns/data/routing/wdp40.php}{Pattern 40 (Data-Based Routing)}:
+
+"Any data element accessible at case level can be utilised in a routing construct". Any output from a sibling CWL step can be used to decide if a CWL step should be executedusing \verb|when|, yes.
+
+“Direct workflow support”: Yes, using the \verb|when| field in a CWL workflow step definition.
+
+"Support for both exclusive choice and multi-choice constructs" These can be emulated, but not directly enforced.
+\end{itemize}
+
+\subsection{Exception Handling patterns}
+
+Broadly speaking, the CWL standards have little support for the \href{http://www.workflowpatterns.com/patterns/exception/}{WPI exception handling types and patterns}\cite{russell_exception_2006}.
+
+\subsubsection{WPI Exception Types}
+\begin{itemize}
+\item Work Item Failure: CWL \verb|CommandLineTool|s can define what exit codes represent successful execution, or temporary or permanenet task execution failures. While there isn't a specific CWL construct to verify the correct execution of a previous step, one can evaluate any outputs (or even the workflow level inputs provided by the user) and halt execution if they do not satisfy some criteria.
+
+Starting with CWL v1.2 there can be alternative and/or supplementary execution paths to cope with a step that ran without error but did not produce some desired output or meet a particular threshold. As of CWL v1.2, there is no ability in CWL to loop over a remediation step until a particular type of result is obtained, however there is an extension for this that is proposed for inclusion as part of the drafting process for CWL v1.3.
+
+\item Deadline Expiry: CWL has no concept of a task deadline.
+
+Starting with CWL v1.1 it is possible to annotate CWL \verb|CommandLineTool|s with a \verb|ToolTimeLimit| that specified the maximum computation time that may pass once execution of a \verb|CommandLineTool| has begun.. However the result of missing the time limit is a permanent failure and CWL does have any automatic recovery mechanism for permanent failures.
+
+\item Resource Unavailability: While the lack of needed resources can happen to a CWL workflow execution, there is no CWL construct to automatically scale or otherwise attempt to recover from such a situation. The providers of CWL compatible workflow execution are allowed to implement their own solutions, otherwise manual recovery is required.
+
+\item External Trigger: There is no concept of triggers in CWL.
+
+\item Constraint Violation: Beyond validation of the workflow description and the type compatibility between processes, the only mechanism to check for constraint violation is \verb|pickValue|. \verb|pickValue| appeared in version 1.2 of the CWL standards to primarily cope with the results of conditional execution using the \verb|when| modifier on Workflow steps.
+\end{itemize}
+\subsubsection{\href{http://www.workflowpatterns.com/patterns/exception/exception_workitemlevel.php}{Exception Handling at Work Item Level}}
+
+There are no CWL constructs corresponding to any of the WPI exception handling at the work item level patterns. However, many of these techniques are used automatically by many CWL executors.
+
+\subsubsection{\href{http://www.workflowpatterns.com/patterns/exception/exception_caselevel.php}{Exception Handling at Case Level}}
+
+CWL has no concept of a case.
+
+\subsubsection{\href{http://www.workflowpatterns.com/patterns/exception/recoveryaction.php}{Recovery Action}}
+
+CWL has no concepts of rollback or compensation actions after exceptions.
+
+\subsection{Presentation patterns}
+\subsection{Event Log Imperfection patterns}
+
 \section{The CWL Ecosystem in Practice}
 \subsection{Evolutionary Experience: Both the Standard(s) and the Ecosystems}
 \subsection{Snapshot of the CWL Ecosystem in 2024}
@@ -254,6 +570,10 @@ Neither the CWL standards nor the CWLProv profile requires that metadata about w
 
 \section{Conclusion and Ongoing Work}
 
+\section{Acknowledgements}
+
+The section "Workflow patterns" contains contributions from Michael Kotliar
+(Presentation and Event Log Imperfection patterns).
 
 
 

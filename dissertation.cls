@@ -588,6 +588,6 @@
 
 %% Hyperlinks are cyan, except in print mode, when they are all black.
 \hypersetup{
-    colorlinks = false
+    colorlinks = true
 }
 
