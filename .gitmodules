@@ -1,0 +1,3 @@
+[submodule "cwlprov"]
+	path = cwlprov
+	url = git@github.com:mr-c/cwlprov-paper.git

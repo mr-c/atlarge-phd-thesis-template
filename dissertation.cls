@@ -17,6 +17,7 @@
 \RequirePackage{amssymb}
 \RequirePackage{txfonts}
 \RequirePackage{mathptmx}
+\RequirePackage{tabularx}
 
 %% English is the default language, but Dutch is used for some sections (mandatory summary and title page).
 \RequirePackage[dutch,english]{babel}
@@ -116,7 +117,6 @@
 \crefname{enumi}{step}{steps}
 
 \RequirePackage{pbox}
-\RequirePackage{tabularx}
 \RequirePackage{soul}
 
 \RequirePackage{array}
@@ -591,3 +591,26 @@
     colorlinks = true
 }
 
+%\RequirePackage{euler}  % LaTeX Error: Command `\arrowvert' already defined.
+\RequirePackage{ragged2e}
+%\RequirePackage{colortbl}
+%\RequirePackage{etoolbox,xpatch}
+%\RequirePackage{environ}
+%\RequirePackage{lastpage}
+%\RequirePackage{lscape}
+%\RequirePackage[absolute]{textpos}
+%\RequirePackage{url}
+%\RequirePackage{newfloat}
+%%\RequirePackage{scrextend}  % LaTeX Error: Command \titlefont already defined
+%%\RequirePackage[noblocks]{authblk}  %  Undefined control sequence in title/title.tex
+%\RequirePackage{quoting}
+%\RequirePackage{stfloats}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+%\newcommand{\tnote}[1]{\textsuperscript{\textit{#1}}}
+\newlist{tablenotes}{itemize}{1}
+\setlist[tablenotes]{label={},labelsep=0pt,leftmargin=0pt,topsep={\dimexpr 12pt-1em\relax}}
+\appto{\tablenotes}{\fontsize{6pt}{9pt}\selectfont}
