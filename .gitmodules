@@ -1,3 +1,6 @@
 [submodule "cwlprov"]
 	path = cwlprov
 	url = git@github.com:mr-c/cwlprov-paper.git
+[submodule "workflow-run-crate-paper"]
+	path = workflow-run-crate-paper
+	url = git@github.com:ResearchObject/workflow-run-crate-paper.git
