@@ -12,6 +12,8 @@
 \LoadClass[10pt]{book}
 
 %% Import packages
+\RequirePackage{fontspec}
+\defaultfontfeatures{Extension = .otf}
 \RequirePackage{fontawesome}
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
@@ -128,11 +130,6 @@
 \RequirePackage{textcomp}
 \RequirePackage{slashbox}
 
-
-\RequirePackage{mdframed}
-\mdfsetup{skipbelow=3pt,skipabove=3pt,innerleftmargin=2.5pt,innerrightmargin=2.5pt,innertopmargin=2.5pt,innerbottommargin=2.5pt}
-\let\oldmdframed\mdframed
-\def\mdframed{\oldmdframed\noindent\ignorespaces}
 
 \RequirePackage{microtype}
 \RequirePackage{multirow}

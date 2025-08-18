@@ -2,17 +2,19 @@
 %\documentclass[print]{dissertation}
 %\documentclass[print,draft]{dissertation}
 
+\setlength{\headheight}{17pt}
 \usepackage{pdfpages}
 \usepackage{bibentry}
+\usepackage{tcolorbox}
 
 \hyphenation{TestRoots WatchDog proj-ect proj-ects Ec-lipse two-fold clie-nts Mo-cki-to wide-spread}
 \newcommand{\sparkline}[1]{$\vcenter{\hbox{\includegraphics[scale=0.04]{#1}}}$}
 
 \makeglossaries
 
-\newcommand*{\origrightarrow}{}
-\let\oldarrow\textrightarrow
-\renewcommand*{\textrightarrow}{\fontfamily{cmr}\selectfont\origrightarrow}
+%\newcommand*{\origrightarrow}{}
+%\let\oldarrow\textrightarrow
+%\renewcommand*{\textrightarrow}{\fontfamily{cmr}\selectfont\origrightarrow}
 \loadglsentries[main]{glossary}
 
 \input{abbreviations}
@@ -61,11 +63,11 @@ Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativeco
 Reproduced here with changes to fit the formatting of this dissertation.
 \include{methods_included/methods_included}
 
-\include{deepdive/deepdive}
+%\include{deepdive/deepdive}
 
 \chapter{Sharing interoperable workflow provenance: A review of best practices and their practical application in CWLProv}
 \label{cwlprov}
-\bibentry{khan_sharing_2019}
+\bibentry{khan-sharing-2019}
 
 Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativecommons.org/licenses/by/4.0/}
 
@@ -79,16 +81,16 @@ Reproduced here with changes to fit the formatting of this dissertation.
 %License
 
 Reproduced here with changes to fit the formatting of this dissertation.
-\include{workflow-run-crate-paper/second_submission/wrroc}
+%\include{workflow-run-crate-paper/second_submission/wrroc}
 
 \chapter{A Non-Intimidating Approach to Workflow Reproducibility in Bioinformatics: Adding Metadata to Research Objects through the Design and Evaluation of Use-Focused Extensions to CWLProv}
 \label{cwlprov-analysis}
 %\fullcite{}
 %License
 Reproduced here without changes.
-\includepdf[pages=-]{renske-cwlprov-analysis-manuscript.pdf}
+%\includepdf[pages=-]{renske-cwlprov-analysis-manuscript.pdf}
 
-\include{conclusion/conclusion}
+%\include{conclusion/conclusion}
 
 %% Use letters for the chapter numbers of the appendices.
 %\appendix
@@ -116,8 +118,8 @@ to this timestamped version.
 \addcontentsline{toc}{chapter}{Glossary}
 \setheader{Glossary}
 
-\include{cv/cv}
-\include{publications/publications}
+%\include{cv/cv}
+%\include{publications/publications}
 %\include{ipa/ipadissertations_2018}
 
 \end{document}
