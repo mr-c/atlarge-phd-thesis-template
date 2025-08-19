@@ -55,7 +55,8 @@
 \RequirePackage{tablefootnote}
 \RequirePackage{lettrine}
 \RequirePackage{metalogo}
-\RequirePackage[sectionbib,numbers,sort&compress]{natbib}
+%\RequirePackage[sectionbib,numbers,sort&compress]{natbib}
+\RequirePackage[natbib=true]{biblatex}
 \RequirePackage[noindentafter]{titlesec}
 \RequirePackage{titletoc}
 %\RequirePackage[nottoc]{tocbibind}
