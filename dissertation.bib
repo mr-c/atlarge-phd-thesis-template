@@ -124,17 +124,18 @@ workflow management systems and business process modelling languages},
 	title = {{CWL}-{Airflow}: a lightweight pipeline manager supporting {Common} {Workflow} {Language}},
 	volume = {8},
 	shorttitle = {{CWL}-{Airflow}},
-	url = {http://academic.oup.com/gigascience/article/8/7/giz084/5535758},
 	doi = {10.1093/gigascience/giz084},
-	abstract = {AbstractBackground. Massive growth in the amount of research data and computational analysis has led to increased use of pipeline managers in biomedical computa},
+        abstract = {Massive growth in the amount of research data and computational analysis has led to increased use of pipeline managers in biomedical computational research. However, each of the \&gt;100 such managers uses its own way to describe pipelines, leading to difficulty porting workflows to different environments and therefore poor reproducibility of computational studies. For this reason, the Common Workflow Language (CWL) was recently introduced as a specification for platform-independent workflow description, and work began to transition existing pipelines and workflow managers to CWL.Herein, we present CWL-Airflow, a package that adds support for CWL to the Apache Airflow pipeline manager. CWL-Airflow uses CWL version 1.0 specification and can run workflows on stand-alone MacOS/Linux servers, on clusters, or on a variety of cloud platforms. A sample CWL pipeline for processing of chromatin immunoprecipitation sequencing data is provided.CWL-Airflow will provide users with the features of a fully fledged pipeline manager and the ability to execute CWL workflows anywhere Airflow can run—from a laptop to a cluster or cloud environment. CWL-Airflow is available under Apache License, version 2.0 (Apache-2.0), and can be downloaded from https://barski-lab.github.io/cwl-airflow, https://scicrunch.org/resolver/RRID:SCR\_017196.},
 	language = {en},
 	number = {7},
 	urldate = {2020-12-06},
 	journal = {GigaScience},
 	author = {Kotliar, Michael and Kartashov, Andrey V. and Barski, Artem},
-	month = jul,
+	month = {07},
 	year = {2019},
 	note = {Publisher: Oxford Academic},
+    	issn = {2047-217X},
+    	eprint = {https://academic.oup.com/gigascience/article-pdf/8/7/giz084/60716924/gigascience\_8\_7\_giz084.pdf},
 }
 
 @inproceedings{crusoe_capturing_2018,
@@ -2233,7 +2234,6 @@ number = {10},
 doi = {10.1371/journal.pcbi.1003285},
 pmid = {24204232},
 pmcid = {PMC3812051},
-f1000-projects = {CWLProv}
 }
 
 @article{Spjuth2015,
@@ -2351,7 +2351,6 @@ issn = {1545-7885},
 doi = {10.1371/journal.pbio.1002195},
 pmid = {26151137},
 pmcid = {PMC4494865},
-f1000-projects = {CWLProv},
 abstract = {Genomics is a Big Data science and is going to get much bigger, very soon, but it is not known whether the needs of genomics will exceed other Big Data domains. Projecting to the year 2025, we compared genomics with three other major generators of Big Data: astronomy, {YouTube}, and Twitter. Our estimates show that genomics is a "four-headed beast"--it is either on par with or the most demanding of the domains analyzed here in terms of data acquisition, storage, distribution, and analysis. We discuss aspects of new technologies that will need to be developed to rise up and meet the computational challenges that genomics poses for the near future. Now is the time for concerted, community-wide planning for the "genomical" challenges of the next decade.}
 }
 @article{gonzlezbeltrn_2015,
@@ -2370,7 +2369,6 @@ issn = {1932-6203},
 doi = {10.1371/journal.pone.0127612},
 pmid = {26154165},
 pmcid = {PMC4495984},
-f1000-projects = {CWLProv},
 abstract = {{MOTIVATION}: Reproducing the results from a scientific paper can be challenging due to the absence of data and the computational tools required for their analysis. In addition, details relating to the procedures used to obtain the published results can be difficult to discern due to the use of natural language when reporting how experiments have been performed. The Investigation/Study/Assay ({ISA}), Nanopublications ({NP}), and Research Objects ({RO}) models are conceptual data modelling frameworks that can structure such information from scientific papers. Computational workflow platforms can also be used to reproduce analyses of data in a principled manner. We assessed the extent by which {ISA}, {NP}, and {RO} models, together with the Galaxy workflow system, can capture the experimental processes and reproduce the findings of a previously published paper reporting on the development of {SOAPdenovo2}, a de novo genome assembler. {RESULTS}: Executable workflows were developed using Galaxy, which reproduced results that were consistent with the published findings. A structured representation of the information in the {SOAPdenovo2} paper was produced by combining the use of {ISA}, {NP}, and {RO} models. By structuring the information in the published paper using these data and scientific workflow modelling frameworks, it was possible to explicitly declare elements of experimental design, variables, and findings. The models served as guides in the curation of scientific information and this led to the identification of inconsistencies in the original published paper, thereby allowing its authors to publish corrections in the form of an errata. {AVAILABILITY}: {SOAPdenovo2} scripts, data, and results are available through the {GigaScience} Database: http://dx.doi.org/10.5524/100044; the workflows are available from {GigaGalaxy}: http://galaxy.cbiit.cuhk.edu.hk; and the representations using the {ISA}, {NP}, and {RO} models are available through the {SOAPdenovo2} case study website http://isa-tools.github.io/soapdenovo2/. {CONTACT}: philippe.rocca-serra@oerc.ox.ac.uk and susanna-assunta.sansone@oerc.ox.ac.uk.}
 }
 @article{ciccarese_2013,
@@ -2388,7 +2386,6 @@ number = {1},
 doi = {10.1186/2041-1480-4-37},
 pmid = {24267948},
 pmcid = {PMC4177195},
-f1000-projects = {{CWLProv} and Your publications},
 abstract = {{BACKGROUND}: Provenance is a critical ingredient for establishing trust of published scientific content. This is true whether we are considering a data set, a computational workflow, a peer-reviewed publication or a simple scientific claim with supportive evidence. Existing vocabularies such as Dublin Core Terms ({DC} Terms) and the {W3C} Provenance Ontology ({PROV}-O) are domain-independent and general-purpose and they allow and encourage for extensions to cover more specific needs. In particular, to track authoring and versioning information of web resources, {PROV}-O provides a basic methodology but not any specific classes and properties for identifying or distinguishing between the various roles assumed by agents manipulating digital artifacts, such as author, contributor and curator. {RESULTS}: We present the Provenance, Authoring and Versioning ontology ({PAV}, namespace http://purl.org/pav/): a lightweight ontology for capturing "just enough" descriptions essential for tracking the provenance, authoring and versioning of web resources. We argue that such descriptions are essential for digital scientific content. {PAV} distinguishes between contributors, authors and curators of content and creators of representations in addition to the provenance of originating resources that have been accessed, transformed and consumed. We explore five projects (and communities) that have adopted {PAV} illustrating their usage through concrete examples. Moreover, we present mappings that show how {PAV} extends the {W3C} {PROV}-O ontology to support broader interoperability. {METHOD}: The initial design of the {PAV} ontology was driven by requirements from the {AlzSWAN} project with further requirements incorporated later from other projects detailed in this paper. The authors strived to keep {PAV} lightweight and compact by including only those terms that have demonstrated to be pragmatically useful in existing applications, and by recommending terms from existing ontologies when plausible. {DISCU\SSION}: We analyze and compare {PAV} with related approaches, namely Provenance Vocabulary ({PRV}), {DC} Terms and {BIBFRAME}. We identify similarities and analyze differences between those vocabularies and {PAV}, outlining strengths and weaknesses of our proposed model. We specify {SKOS} mappings that align {PAV} with {DC} Terms. We conclude the paper with general remarks on the applicability of {PAV}.}
 }
 
@@ -2404,7 +2401,6 @@ number = {Web Server issue},
 doi = {10.1093/nar/gkt328},
 pmid = {23640334},
 pmcid = {PMC3692062},
-f1000-projects = {{CWL} and {CWLProv} and Debianpaper and Your publications},
 abstract = {The Taverna workflow tool suite (http://www.taverna.org.uk) is designed to combine distributed Web Services and/or local tools into complex analysis pipelines. These pipelines can be executed on local desktop machines or through larger infrastructure (such as supercomputers, Grids or cloud environments), using the Taverna Server. In bioinformatics, Taverna workflows are typically used in the areas of high-throughput omics analyses (for example, proteomics or transcriptomics), or for evidence gathering methods involving text mining or data mining. Through Taverna, scientists have access to several thousand different tools and resources that are freely available from a large range of life science institutions. Once constructed, the workflows are reusable, executable bioinformatics protocols that can be shared, reused and repurposed. A repository of public workflows is available at http://www.myexperiment.org. This article provides an update to the Taverna tool suite, highlighting new features and developments in the workbench and the Taverna Server.}
 }
 
@@ -2421,7 +2417,6 @@ number = {6060},
 doi = {10.1126/science.1213847},
 pmid = {22144613},
 pmcid = {PMC3383002},
-f1000-projects = {CWLProv},
 abstract = {Computational science has led to exciting new developments, but the nature of the work has exposed limitations in our ability to evaluate published findings. Reproducibility has the potential to serve as a minimum standard for judging scientific claims when full independent replication of a study is not possible.}
 }
 
@@ -2438,7 +2433,6 @@ number = {10},
 doi = {10.1093/bioinformatics/btt113},
 pmid = {23479348},
 pmcid = {PMC3654706},
-f1000-projects = {{CWLProv} and Debianpaper},
 abstract = {{MOTIVATION}: Advancing the search, publication and integration of bioinformatics tools and resources demands consistent machine-understandable descriptions. A comprehensive ontology allowing such descriptions is therefore required. {RESULTS}: {EDAM} is an ontology of bioinformatics operations (tool or workflow functions), types of data and identifiers, application domains and data formats. {EDAM} supports semantic annotation of diverse entities such as Web services, databases, programmatic libraries, standalone tools, interactive applications, data schemas, datasets and publications within bioinformatics. {EDAM} applies to organizing and finding suitable tools and data and to automating their integration into complex applications or workflows. It includes over 2200 defined concepts and has successfully been used for annotations and implementations. {AVAILABILITY}: The latest stable version of {EDAM} is available in {OWL} format from http://edamontology.org/{EDAM}.owl and in {OBO} format from http://edamontology.org/{EDAM}.obo. It can be viewed online at the {NCBO} {BioPortal} and the {EBI} Ontology Lookup Service. For documentation and license please refer to http://edamontology.org. This article describes version 1.2 available at http://edamontology.org/{EDAM\_1}.2.owl. {CONTACT}: jison@ebi.ac.uk.}
 }
 @article{muse_1994,
@@ -2452,7 +2446,6 @@ volume = {11},
 number = {5},
 doi = {10.1093/oxfordjournals.molbev.a040152},
 pmid = {7968485},
-f1000-projects = {CWLProv},
 abstract = {A model of {DNA} sequence evolution applicable to coding regions is presented. This represents the first evolutionary model that accounts for dependencies among nucleotides within a codon. The model uses the codon, as opposed to the nucleotide, as the unit of evolution, and is parameterized in terms of synonymous and nonsynonymous nucleotide substitution rates. One of the model's advantages over those used in methods for estimating synonymous and nonsynonymous substitution rates is that it completely corrects for multiple hits at a codon, rather than taking a parsimony approach and considering only pathways of minimum change between homologous codons. Likelihood-ratio versions of the relative-rate test are constructed and applied to data from the complete chloroplast {DNA} sequences of Oryza sativa, Nicotiana tabacum, and Marchantia polymorpha. Results of these tests confirm previous findings that substitution rates in the chloroplast genome are subject to both lineage-specific and locus-specific effects. Additionally, the new tests suggest tha the rate heterogeneity is due primarily to differences in nonsynonymous substitution rates. Simulations help confirm previous suggestions that silent sites are saturated, leaving no evidence of heterogeneity in synonymous substitution rates.}
 }
 
@@ -2470,7 +2463,6 @@ issn = {2052-4463},
 doi = {10.1038/sdata.2016.18},
 pmid = {26978244},
 pmcid = {PMC4792175},
-f1000-projects = {CWLProv},
 abstract = {There is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders-representing academia, industry, funding agencies, and scholarly publishers-have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the {FAIR} Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the {FAIR} Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the {FAIR} Principles, and includes the rationale behind them, and some exemplar implementations in the community.}
 }
 @article{freire_2012,
@@ -2484,7 +2476,6 @@ volume = {14},
 number = {4},
 issn = {1521-9615},
 doi = {10.1109/{MCSE}.2012.76},
-f1000-projects = {CWLProv}
 }
 
 @article{leipzig_2017,
@@ -2515,7 +2506,6 @@ journal = {{PeerJ} Computer Science},
 volume = {2},
 issn = {2376-5992},
 doi = {10.7717/peerj-cs.86},
-f1000-projects = {{CWLProv} and Reproducibility}
 }
 @inproceedings{garijo_2011,
 title = {A new approach for publishing workflows: Abstractions, standards, and linked data},
@@ -2524,13 +2514,12 @@ pages = {47},
 publisher = {{ACM} Press},
 url = {http://dl.acm.org/citation.cfm?doid=2110497.2110504},
 year = {2011},
-month = {nov},
+month = {11},
 day = {14},
 urldate = {2018-07-13},
 isbn = {9781450311007},
 doi = {10.1145/2110497.2110504},
 address = {New York, New York, {USA}},
-f1000-projects = {CWLProv},
 booktitle = {Proceedings of the 6th workshop on Workflows in support of large-scale science - {WORKS} '11}
 }
 
@@ -2638,7 +2627,6 @@ number = {1},
 doi = {10.1186/2041-1480-5-41},
 pmid = {25276335},
 pmcid = {PMC4177597},
-f1000-projects = {{CWLProv} and Your publications},
 abstract = {{BACKGROUND}: One of the main challenges for biomedical research lies in the computer-assisted integrative study of large and increasingly complex combinations of data in order to understand molecular mechanisms. The preservation of the materials and methods of such computational experiments with clear annotations is essential for understanding an experiment, and this is increasingly recognized in the bioinformatics community. Our assumption is that offering means of digital, structured aggregation and annotation of the objects of an experiment will provide necessary meta-data for a scientist to understand and recreate the results of an experiment. To support this we explored a model for the semantic description of a workflow-centric Research Object ({RO}), where an {RO} is defined as a resource that aggregates other resources, e.g., datasets, software, spreadsheets, text, etc. We applied this model to a case study where we analysed human metabolite variation by workflows. {RESULTS}: We present the application of the workflow-centric {RO} model for our bioinformatics case study. Three workflows were produced following recently defined Best Practices for workflow design. By modelling the experiment as an {RO}, we were able to automatically query the experiment and answer questions such as "which particular data was input to a particular workflow to test a particular hypothesis?", and "which particular conclusions were drawn from a particular workflow?". {CONCLUSIONS}: Applying a workflow-centric {RO} model to aggregate and annotate the resources used in a bioinformatics experiment, allowed us to retrieve the conclusions of the experiment in the context of the driving hypothesis, the executed workflows and their input data. The {RO} model is an extendable reference model that can be used by other systems as well. {AVAILABILITY}: The Research Object is available at http://www.myexperiment.org/packs/428 The {Wf4Ever} Research Object Model is available at https://w3id.org/ro/2016-01-28/.}
 }
 
@@ -2687,7 +2675,6 @@ number = {6},
 doi = {10.1371/journal.pbio.2001414},
 pmid = {28662064},
 pmcid = {PMC5490878},
-f1000-projects = {{CWLProv} and Your publications},
 abstract = {In many disciplines, data are highly decentralized across thousands of online databases (repositories, registries, and knowledgebases). Wringing value from such databases depends on the discipline of data science and on the humble bricks and mortar that make integration possible; identifiers are a core component of this integration infrastructure. Drawing on our experience and on work by other groups, we outline 10 lessons we have learned about the identifier qualities and best practices that facilitate large-scale data integration. Specifically, we propose actions that identifier practitioners (database providers) should take in the design, provision and reuse of identifiers. We also outline the important considerations for those referencing identifiers in various circumstances, including by authors and data generators. While the importance and relevance of each lesson will vary by context, there is a need for increased awareness about how to avoid and manage common identifier problems, especially those related to persistence and web-accessibility/resolvability. We focus strongly on web-based identifiers in the life sciences; however, the principles are broadly relevant to other disciplines.}
 }
 @inproceedings{khan_2017,
@@ -2698,7 +2685,6 @@ year = {2017},
 month = {jun},
 day = {14},
 urldate = {2017-08-16},
-f1000-projects = {{CWLProv} and Your publications},
 abstract = {The term Provenance is referred to as {\textquoteleftThe} beginning of something\textquoterights existence; something\textquoterights origin\textquoteright Or {\textquoteleftA} record of ownership of a work of art or an antique, used as a guide to authenticity or quality\textquoteright. Provenance tracking is crucial in scientific studies where workflows have emerged as an exemplar approach to mechanize data-intensive analyses. Gil et al. analyze challenges of scientific workflows and concluded that formally specified workflow helps\textquoteleftaccelerate the rate of scientific process\textquoteright and facilitates others to reproduce the given experiment provided that provenance of end-to-end process at every level is captured.We have implemented exemplar {GATK} variant calling workflow using three approaches to workflow definition namely Galaxy, {CWL} and Cpipe to identify assumptions implicit in these approaches. These assumptions lead to limited or no understanding of reproducibility requirements due to lack of documentation and comprehensive provenance tracking and resulted in identification of provenance information crucial for genomic workflows.{CWL} provides a declarative approach to workflow declaration making minimal assumptions about precise software environment, base software dependencies, configuration settings, alteration of parameters and software versions. It aims to provide an open source extensible standard to build flexible and customized workflows including intricate details of every process. It facilitates capture of information by supporting declaration of requirements, `cwl:tool` and checksums etc. Currently, there is no mechanism to gather the produced information as a result of a workflow run into one bundle for future use. We propose to demonstrate the implementation of a module for {CWL}.}
 }
 
@@ -2713,7 +2699,6 @@ day = {5},
 urldate = {2018-07-13},
 isbn = {978-1-4673-9005-7},
 doi = {10.1109/bigdata.2016.7840618},
-f1000-projects = {{CWLProv} and Your publications},
 abstract = {Big data workflows often require the assembly and exchange of complex, multi-element datasets. For example, in biomedical applications, the input to an analytic pipeline can be a dataset consisting thousands of images and genome sequences assembled from diverse repositories, requiring a description of the contents of the dataset in a concise and unambiguous form. Typical approaches to creating datasets for big data workflows assume that all data reside in a single location, requiring costly data marshaling and permitting errors of omission and commission because dataset members are not explicitly specified. We address these issues by proposing simple methods and tools for assembling, sharing, and analyzing large and complex datasets that scientists can easily integrate into their daily workflows. These tools combine a simple and robust method for describing data collections ({BDBags}), data descriptions (Research Objects), and simple persistent identifiers (Minids) to create a powerful ecosystem of tools and services for big data analysis and sharing. We present these tools and use biomedical case studies to illustrate their use for the rapid assembly, sharing, and analysis of large datasets.},
 booktitle = {2016 {IEEE} International Conference on Big Data (Big Data)}
 }
@@ -2735,7 +2720,6 @@ year = {2014},
 month = {apr},
 day = {30},
 urldate = {2017-08-16},
-f1000-projects = {{CWLProv} and Your publications},
 abstract = {Provenance is information about entities, activities, and people involved in producing a piece of data or thing, which can be used to form assessments about its quality, reliability or trustworthiness. This document describes extensions to {PROV} to facilitate the modeling of provenance for dictionary data structures. {PROV}-{DM} specifies a Collection as an entity that provides a structure to some constituents, which are themselves entities. However, some applications may need a mechanism to specify more structure to a Collection, in order to accurately describe its provenance. Therefore, in this document, we introduce Dictionary, a specific type of Collection with a logical structure consisting of key-entity pairs.}
 }
 @article{ciccarese_2013a,
@@ -2750,7 +2734,6 @@ volume = {17},
 number = {6},
 issn = {1089-7801},
 doi = {10.1109/{MIC}.2013.123},
-f1000-projects = {{CWLProv} and Your publications}
 }
 
 @TechReport{moreau_2013,
@@ -2819,7 +2802,6 @@ day = {5},
 urldate = {2018-07-13},
 isbn = {978-1-4577-2163-2},
 doi = {10.1109/eScience.2011.22},
-f1000-projects = {{CWLProv} and Your publications},
 booktitle = {2011 {IEEE} Seventh International Conference on {eScience}}
 }
 
@@ -2861,7 +2843,6 @@ abstract = {With the development of new experimental technologies, biologists ar
     urldate = {2017-10-04},
     volume = {1486},
     issn = {1613-0073},
-    f1000-projects = {{CWLProv} and Linked Data and Reproducibility},
     booktitle = {Proceedings of the {ISWC} 2015 Posters \& Demonstrations Track. Co-located with the 14th International Semantic Web Conference ({ISWC}-2015)}
 }
 
@@ -2908,7 +2889,6 @@ urldate = {2018-07-23},
 journal = {F1000Res},
 volume = {6},
 doi = {10.12688/f1000research.12093.1},
-f1000-projects = {CWLProv},
 abstract = {{RNA}-seq analysis involves multiple steps from processing raw sequencing data to identifying, organizing, annotating, and reporting differentially expressed genes. bcbio is an open source, community-maintained framework providing automated and scalable {RNA}-seq methods for identifying gene abundance counts. We have developed {bcbioRNASeq}, a Bioconductor package that provides ready-to-render templates and wrapper functions to post-process bcbio output data. {bcbioRNASeq} automates the generation of high-level {RNA}-seq reports, including identification of differentially expressed genes, functional enrichment analysis and quality control analysis.}
 }
 
@@ -2937,7 +2917,6 @@ volume = {12},
 number = {3},
 issn = {1618-2162},
 doi = {10.1007/s13222-012-0100-z},
-f1000-projects = {{CWLProv} and Workflows}
 }
 @incollection{giesler_2017,
 booktitle = {High-Performance Scientific Computing},
@@ -2953,7 +2932,6 @@ isbn = {978-3-319-53861-7},
 issn = {0302-9743},
 doi = {10.1007/978-3-319-53862-4\_20},
 address = {Cham},
-f1000-projects = {{CWLProv} and Research Object},
 abstract = {In this paper we present a flexible provenance management system called {UniProv}. {UniProv} is an ongoing development project providing provenance tracking in scientific workflows and data management particularly in the field of neuroscience, thus allowing users to validate and reproduce tasks and results of their experiments.The primary goal is to equip the commonly used Grid middleware {UNICORE} [1] and its incorporated workflow engine with the provenance capturing mechanism of {UniProv}. We also explain an approach for using predefined patterns to ensure compatibility with the {W3C} {PROV} [2] Data Model and to map the provenance information properly to a neo4j graph database.}
 }
 @inproceedings{gomezperez_2017,
@@ -2967,7 +2945,6 @@ day = {24},
 urldate = {2018-04-30},
 isbn = {978-1-5386-2686-3},
 doi = {10.1109/eScience.2017.40},
-f1000-projects = {{CWLProv} and Research Object},
 abstract = {A research object is a single information unit encapsulating all the knowledge relevant to a particular scientific investigation, their associated metadata and the context where such resources were produced and came into play. Aimed at enhancing the preservation, reuse and scholarly communication of data-intensive science, research objects are both technical and social artifacts that represent a partnership between scientific communities and the computational support required in nowadays science. In this paper, we explore such partnership, identifying the lack of appropriate machine-readable metadata as one of its main inhibitors, and address the semantic enrichment of research objects as one key aspect towards its establishment. Focused on the specific needs of Earth Science communities, we propose extensions to research object representation models and present novel methods and tools to enrich research object metadata through automatic means. Finally, we validate the approach through the implementation of a recommender system that exploits the resulting metadata to facilitate research object discovery and reuse, enabling humans and machines to work together and accelerate the research life cycle.},
 booktitle = {2017 {IEEE} 13th International Conference on e-Science (e-Science)}
 }
@@ -3000,7 +2977,6 @@ issn = {2150-7511},
 doi = {10.1128/{mBio}.00525-18},
 pmid = {29871915},
 pmcid = {PMC5989067},
-f1000-projects = {CWLProv},
 abstract = {The "reproducibility crisis" in science affects microbiology as much as any other area of inquiry, and microbiologists have long struggled to make their research reproducible. We need to respect that ensuring that our methods and results are sufficiently transparent is difficult. This difficulty is compounded in interdisciplinary fields such as microbiome research. There are many reasons why a researcher is unable to reproduce a previous result, and even if a result is reproducible, it may not be correct. Furthermore, failures to reproduce previous results have much to teach us about the scientific process and microbial life itself. This Perspective delineates a framework for identifying and overcoming threats to reproducibility, replicability, robustness, and generalizability of microbiome research. Instead of seeing signs of a crisis in others' work, we need to appreciate the technical and social difficulties that limit reproducibility in the work of others as well as our own. Copyright \copyright 2018 Schloss.}
 }
 @article{grning_2018a,
@@ -3017,7 +2993,6 @@ number = {6},
 issn = {24054712},
 doi = {10.1016/j.cels.2018.03.014},
 pmid = {29953862},
-f1000-projects = {CWLProv},
 abstract = {Many areas of research suffer from poor reproducibility, particularly in computationally intensive domains where results rely on a series of complex methodological decisions that are not well captured by traditional publication approaches. Various guidelines have emerged for achieving reproducibility, but implementation of these practices remains difficult due to the challenge of assembling software tools plus associated libraries, connecting tools together into pipelines, and specifying parameters. Here, we discuss a suite of cutting-edge technologies that make computational reproducibility not just possible, but practical in both time and effort. This suite combines three well-tested components-a system for building highly portable packages of bioinformatics software, containerization and virtualization technologies for isolating reusable execution environments for these packages, and workflow systems that automatically orchestrate the composition of these packages for entire pipelines-to achieve an unprecedented level of computational reproducibility. We also provide a practical implementation and five recommendations to help set a typical researcher on the path to performing data analyses reproducibly. Copyright \copyright 2018 Elsevier Inc. All rights reserved.}
 }
 @article{jeffrey_2014,
@@ -3030,7 +3005,6 @@ journal = {Front Neuroinformatics},
 volume = {8},
 issn = {1662-5196},
 doi = {10.3389/conf.fninf.2014.18.00069},
-f1000-projects = {CWLProv}
 }
 
 @inproceedings{fernando_2007,
@@ -3043,7 +3017,6 @@ month = {sep},
 day = {26},
 urldate = {2018-07-13},
 doi = {10.1109/{SYNASC}.2007.18},
-f1000-projects = {CWLProv},
 booktitle = {Ninth International Symposium on Symbolic and Numeric Algorithms for Scientific Computing ({SYNASC} 2007)}
 }
 @inproceedings{lynch_2007,
@@ -3059,7 +3032,6 @@ urldate = {2018-07-15},
 isbn = {9781595936448},
 doi = {10.1145/1255175.1255190},
 address = {New York, New York, {USA}},
-f1000-projects = {CWLProv},
 booktitle = {Proceedings of the 2007 conference on Digital libraries - {JCDL} '07}
 }
 @techreport{farrell_2013,
@@ -3071,7 +3043,6 @@ year = {2013},
 month = {apr},
 urldate = {2018-07-15},
 doi = {10.17487/rfc6920},
-f1000-projects = {CWLProv}
 }
 @online{RObundle,
 title = {Research Object Bundle 1.0},
@@ -3106,7 +3077,7 @@ author = {Garijo, Daniel and Gil, Yolanda},
 series = {{CEUR} Workshop Proceedings},
 url = {http://ceur-ws.org/Vol-951/paper6.pdf},
 year = {2012},
-month = {nov},
+month = {11},
 day = {12},
 urldate = {2018-07-13},
 volume = {951},
@@ -3544,15 +3515,7 @@ and Wei, Yaxing},
   publisher={Nature Publishing Group}
 }
 
-@article {cwlairflow2018,
-	author = {Kotliar, Michael and Kartashov, Andrey and Barski, Artem},
-	title = {CWL-Airflow: a lightweight pipeline manager supporting Common Workflow Language},
-	year = {2018},
-	doi = {10.1101/249243},
-	publisher = {Cold Spring Harbor Laboratory},
-	abstract = {Abstract: Massive growth in the amount of research data and computational analysis has led to increased utilization of pipeline managers in biomedical computational research. However, each of more than 100 such managers uses its own way to describe pipelines, leading to difficulty porting workflows to different environments and therefore poor reproducibility of computational studies. For this reason, the Common Workflow Language (CWL) was recently introduced as a specification for platform-independent workflow description, and work began to transition existing pipelines and workflow managers to CWL. Here, we present CWL-Airflow, an extension for the Apache Airflow pipeline manager supporting CWL. CWL-Airflow utilizes CWL v1.0 specification and can be used to run workflows on standalone MacOS/Linux servers, on clusters, or on variety cloud platforms. A sample CWL pipeline for processing of ChIP-Seq data is provided. CWL-Airflow is available under Apache license v.2 and can be downloaded from https://github.com/Barski-lab/cwl-airflow.},
-	journal = {bioRxiv}
-}
+
 
 @inproceedings{cristofori2013usage,
   title={Usage Record--Format Recommendation},
@@ -4309,16 +4272,6 @@ note = {Accessed 26 Sep 2018}
   journal = {Computing in Science {\&} Engineering}
 }
 
-@article {tazro2018,
-	author = {Ohta, Tazro and Tanjo, Tomoya and Ogasawara, Osamu},
-	title = {Accumulating computational resource usage of genomic data analysis workflow to optimize cloud computing instance selection},
-	year = {2018},
-	doi = {10.1101/456756},
-	abstract = {Background: Container virtualization technologies such as Docker became popular in the bioinformatics domain as they improve portability and reproducibility of software deployment. Along with software packaged in containers, the workflow description standards Common Workflow Language also enabled to perform data analysis on multiple different computing environments with ease. These technologies accelerate the use of on-demand cloud computing platform which can scale out according to the amount of data. However, to optimize the time and the budget on a use of cloud, users need to select a suitable instance type corresponding to the resource requirements of their workflows. Results: We developed CWL-metrics, a system to collect runtime metrics of Docker containers and workflow metadata to analyze resource requirement of workflows. We demonstrated the analysis by using seven transcriptome quantification workflows on six instance types. The result showed instance type options of lower financial cost and faster execution time with required amount of computational resources. Conclusions: The summary of resource requirements of workflow executions provided by CWL-metrics can help users to optimize the selection of cloud computing instance. The runtime metrics data also accelerate to share workflows among different workflow management frameworks.},
-	comment = {Submitted to GigaScience},
-	journal = {bioRxiv}
-}
-
 @online {biosimspacewebinar,
   title = {BioExcel Webinar \#28: BioSimSpace – filling the gaps between molecular simulation codes},
   author = {Christopher Woods},
@@ -4479,11 +4432,24 @@ doi = {10.1093/nar/gkx967},
 }
 
 @inproceedings {PoeM,
-  title={From Scientific Workflow Patterns to 5-star Linked Open Data.},
-  author={Gaignard, Alban and Skaf-Molli, Hala and Bihou{\'e}e, Audrey},
-  booktitle={TaPP},
-  year={2016}
+  author       = {Alban Gaignard and
+                  Hala Skaf{-}Molli and
+                  Audrey Bihou{\'{e}}e},
+  editor       = {Sarah Cohen Boulakia},
+  title        = {From Scientific Workflow Patterns to 5-star Linked Open Data},
+  publisher    = {{USENIX} Association},
+  year         = {2016},
+  url          = {https://www.usenix.org/conference/tapp16/workshop-program/presentation/gaignard},
+  timestamp    = {Tue, 02 Feb 2021 08:04:57 +0100},
+  biburl       = {https://dblp.org/rec/conf/tapp/GaignardSB16.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org},
+booktitle = {8th USENIX Workshop on the Theory and Practice of Provenance (TaPP 16)},
+year = {2016},
+address = {Washington, D.C.},
+month = {6}
 }
+
+
 
 @article{10.1093/gigascience/giz052,
     author = {Ohta, Tazro and Tanjo, Tomoya and Ogasawara, Osamu},
@@ -4563,7 +4529,7 @@ doi = {10.1093/nar/gkx967},
 doi = {10.1088/1748-9326/ab4e55},
 url = {https://dx.doi.org/10.1088/1748-9326/ab4e55},
 year = {2019},
-month = {nov},
+month = {11},
 publisher = {IOP Publishing},
 volume = {14},
 number = {12},
@@ -4577,8 +4543,9 @@ abstract = {Climate change challenges societal functioning, likely requiring con
 @TechReport{9373623,
   author      = "",
   title       = "{OWL} 2 Web Ontology Language Document Overview (Second Edition)",
-  month       = dec,
-  note        = "https://www.w3.org/TR/2012/REC-owl2-overview-20121211/",
+  month       = {12},
+  url         = "https://www.w3.org/TR/2012/REC-owl2-overview-20121211/",
+  note        = "W3C Recommendation 11 December 2012",
   year        = "2012",
   bibsource   = "https://w2.syronex.com/jmr/w3c-biblio",
   type        = "",
@@ -4804,17 +4771,6 @@ month = apr
   month = sep
 }
 
-@TechReport{Summers:09:SSK,
-  author      = "Ed Summers and Antoine Isaac",
-  title       = "{SKOS} Simple Knowledge Organization System Primer",
-  month       = aug,
-  note        = "https://www.w3.org/TR/2009/NOTE-skos-primer-20090818/",
-  year        = "2009",
-  bibsource   = "https://w2.syronex.com/jmr/w3c-biblio",
-  type        = "{W3C} Note",
-  institution = "W3C",
-}
-
 @article{Perez2018,
   title = {A systematic review of provenance systems},
   volume = {57},
@@ -4955,7 +4911,7 @@ month = apr
   author      = "",
   title       = "{SPARQL} 1.1 Overview",
   month       = mar,
-  note        = "https://www.w3.org/TR/2013/REC-sparql11-overview-20130321/",
+  url        = "https://www.w3.org/TR/2013/REC-sparql11-overview-20130321/",
   year        = "2013",
   bibsource   = "https://w2.syronex.com/jmr/w3c-biblio",
   type        = "{W3C} Recommendation",
@@ -4981,7 +4937,7 @@ month = apr
 @TechReport{5s-crate,
   title = {Five Safes RO-Crate profile. Version 0.4.},
   type = {{TRE-FX} Candidate Recommendation},
-  note = {https://w3id.org/5s-crate/0.4},
+  url = {https://w3id.org/5s-crate/0.4},
   date = {2023-12-11}
 }
 
@@ -5334,7 +5290,7 @@ month = apr
   publisher = {Elsevier BV},
   author = {Rehm,  Heidi L. and Page,  Angela J.H. and Smith,  Lindsay and Adams,  Jeremy B. and Alterovitz,  Gil and Babb,  Lawrence J. and Barkley,  Maxmillian P. and Baudis,  Michael and Beauvais,  Michael J.S. and Beck,  Tim and Beckmann,  Jacques S. and Beltran,  Sergi and Bernick,  David and Bernier,  Alexander and Bonfield,  James K. and Boughtwood,  Tiffany F. and Bourque,  Guillaume and Bowers,  Sarion R. and Brookes,  Anthony J. and Brudno,  Michael and Brush,  Matthew H. and Bujold,  David and Burdett,  Tony and Buske,  Orion J. and Cabili,  Moran N. and Cameron,  Daniel L. and Carroll,  Robert J. and Casas-Silva,  Esmeralda and Chakravarty,  Debyani and Chaudhari,  Bimal P. and Chen,  Shu Hui and Cherry,  J. Michael and Chung,  Justina and Cline,  Melissa and Clissold,  Hayley L. and Cook-Deegan,  Robert M. and Courtot,  Mélanie and Cunningham,  Fiona and Cupak,  Miro and Davies,  Robert M. and Denisko,  Danielle and Doerr,  Megan J. and Dolman,  Lena I. and Dove,  Edward S. and Dursi,  L. Jonathan and Dyke,  Stephanie O.M. and Eddy,  James A. and Eilbeck,  Karen and Ellrott,  Kyle P. and Fairley,  Susan and Fakhro,  Khalid A. and Firth,  Helen V. and Fitzsimons,  Michael S. and Fiume,  Marc and Flicek,  Paul and Fore,  Ian M. and Freeberg,  Mallory A. and Freimuth,  Robert R. and Fromont,  Lauren A. and Fuerth,  Jonathan and Gaff,  Clara L. and Gan,  Weiniu and Ghanaim,  Elena M. and Glazer,  David and Green,  Robert C. and Griffith,  Malachi and Griffith,  Obi L. and Grossman,  Robert L. and Groza,  Tudor and Guidry Auvil,  Jaime M. and Guigó,  Roderic and Gupta,  Dipayan and Haendel,  Melissa A. and Hamosh,  Ada and Hansen,  David P. and Hart,  Reece K. and Hartley,  Dean Mitchell and Haussler,  David and Hendricks-Sturrup,  Rachele M. and Ho,  Calvin W.L. and Hobb,  Ashley E. and Hoffman,  Michael M. and Hofmann,  Oliver M. and Holub,  Petr and Hsu,  Jacob Shujui and Hubaux,  Jean-Pierre and Hunt,  Sarah E. and Husami,  Ammar and Jacobsen,  Julius O. and Jamuar,  Saumya S. and Janes,  Elizabeth L. and Jeanson,  Francis and Jené,  Aina and Johns,  Amber L. and Joly,  Yann and Jones,  Steven J.M. and Kanitz,  Alexander and Kato,  Kazuto and Keane,  Thomas M. and Kekesi-Lafrance,  Kristina and Kelleher,  Jerome and Kerry,  Giselle and Khor,  Seik-Soon and Knoppers,  Bartha M. and Konopko,  Melissa A. and Kosaki,  Kenjiro and Kuba,  Martin and Lawson,  Jonathan and Leinonen,  Rasko and Li,  Stephanie and Lin,  Michael F. and Linden,  Mikael and Liu,  Xianglin and Liyanage,  Isuru Udara and Lopez,  Javier and Lucassen,  Anneke M. and Lukowski,  Michael and Mann,  Alice L. and Marshall,  John and Mattioni,  Michele and Metke-Jimenez,  Alejandro and Middleton,  Anna and Milne,  Richard J. and Molnár-Gábor,  Fruzsina and Mulder,  Nicola and Munoz-Torres,  Monica C. and Nag,  Rishi and Nakagawa,  Hidewaki and Nasir,  Jamal and Navarro,  Arcadi and Nelson,  Tristan H. and Niewielska,  Ania and Nisselle,  Amy and Niu,  Jeffrey and Nyr\"{o}nen,  Tommi H. and O’Connor,  Brian D. and Oesterle,  Sabine and Ogishima,  Soichi and Ota Wang,  Vivian and Paglione,  Laura A.D. and Palumbo,  Emilio and Parkinson,  Helen E. and Philippakis,  Anthony A. and Pizarro,  Angel D. and Prlic,  Andreas and Rambla,  Jordi and Rendon,  Augusto and Rider,  Renee A. and Robinson,  Peter N. and Rodarmer,  Kurt W. and Rodriguez,  Laura Lyman and Rubin,  Alan F. and Rueda,  Manuel and Rushton,  Gregory A. and Ryan,  Rosalyn S. and Saunders,  Gary I. and Schuilenburg,  Helen and Schwede,  Torsten and Scollen,  Serena and Senf,  Alexander and Sheffield,  Nathan C. and Skantharajah,  Neerjah and Smith,  Albert V. and Sofia,  Heidi J. and Spalding,  Dylan and Spurdle,  Amanda B. and Stark,  Zornitza and Stein,  Lincoln D. and Suematsu,  Makoto and Tan,  Patrick and Tedds,  Jonathan A. and Thomson,  Alastair A. and Thorogood,  Adrian and Tickle,  Timothy L. and Tokunaga,  Katsushi and T\"{o}rnroos,  Juha and Torrents,  David and Upchurch,  Sean and Valencia,  Alfonso and Guimera,  Roman Valls and Vamathevan,  Jessica and Varma,  Susheel and Vears,  Danya F. and Viner,  Coby and Voisin,  Craig and Wagner,  Alex H. and Wallace,  Susan E. and Walsh,  Brian P. and Williams,  Marc S. and Winkler,  Eva C. and Wold,  Barbara J. and Wood,  Grant M. and Woolley,  J. Patrick and Yamasaki,  Chisato and Yates,  Andrew D. and Yung,  Christina K. and Zass,  Lyndon J. and Zaytseva,  Ksenia and Zhang,  Junjun and Goodhand,  Peter and North,  Kathryn and Birney,  Ewan},
   year = {2021},
-  month = {nov},
+  month = {11},
   pages = {100029}
 }
 
@@ -5608,8 +5564,8 @@ month = apr
 @TechReport{Isaac2009,
   author      = "Ed Summers and Antoine Isaac",
   title       = "{SKOS} Simple Knowledge Organization System Primer",
-  month       = aug,
-  note        = "https://www.w3.org/TR/2009/NOTE-skos-primer-20090818/",
+  month       = {8},
+  url         = "https://www.w3.org/TR/2009/NOTE-skos-primer-20090818/",
   year        = "2009",
   bibsource   = "https://w2.syronex.com/jmr/w3c-biblio",
   type        = "{W3C} Note",
