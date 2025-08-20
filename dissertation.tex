@@ -2,11 +2,33 @@
 %\documentclass[print]{dissertation}
 %\documentclass[print,draft]{dissertation}
 
+% Use adjustwidth environment to exceed column width (see example table in text)
+\usepackage{changepage}
+
 \setlength{\headheight}{17pt}
 \usepackage{pdfpages}
-\usepackage{bibentry}
 \usepackage{tcolorbox}
 \usepackage{csquotes}
+
+\usepackage{array}
+% array package and thick rules for tables
+
+% create "+" rule type for thick vertical lines
+\newcolumntype{+}{!{\vrule width 2pt}}
+
+% create \thickcline for thick horizontal lines of variable length
+\newlength\savedwidth
+\newcommand\thickcline[1]{%
+  \noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+  \cline{#1}%
+  \noalign{\vskip\arrayrulewidth}%
+  \noalign{\global\arrayrulewidth\savedwidth}%
+}
+
+% \thickhline command for thick horizontal lines that span the table
+\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+\hline
+\noalign{\global\arrayrulewidth\savedwidth}}
 
 \hyphenation{TestRoots WatchDog proj-ect proj-ects Ec-lipse two-fold clie-nts Mo-cki-to wide-spread}
 
@@ -22,7 +44,7 @@
 %\bibliographystyle{unsrt}
 \addbibresource{dissertation.bib}
 
-\nobibliography*
+\preto\fullcite{\AtNextCite{\defcounter{maxnames}{99}}}
 
 \begin{document}
 
@@ -60,7 +82,7 @@
 \chapter{Methods Included: Standardizing computational reuse and portability with the Common Workflow Language.}
 \label{methods-included}
 
-\bibentry{crusoe-methods-2022}
+\fullcite{crusoe-methods-2022}
 
 Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativecommons.org/licenses/by/4.0/}
 
@@ -71,7 +93,7 @@ Reproduced here with changes to fit the formatting of this dissertation.
 
 \chapter{Sharing interoperable workflow provenance: A review of best practices and their practical application in CWLProv}
 \label{cwlprov}
-\bibentry{khan-sharing-2019}
+\fullcite{khan-sharing-2019}
 
 Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativecommons.org/licenses/by/4.0/}
 
@@ -80,9 +102,9 @@ Reproduced here with changes to fit the formatting of this dissertation.
 
 \chapter{Recording provenance of workflow runs with RO-Crate}
 \label{wrroc}
-\bibentry{leo2023recording}
+\fullcite{leo2023recording}
 
-%License
+Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativecommons.org/licenses/by/4.0/}
 
 Reproduced here with changes to fit the formatting of this dissertation.
 \include{workflow-run-crate-paper/second_submission/wrroc}
