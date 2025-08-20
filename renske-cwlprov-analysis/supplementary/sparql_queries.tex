@@ -1,0 +1,100 @@
+\onecolumn
+\section{SPARQL queries}
+\label{renske:sup:sparql}
+
+\subsection{How to run the queries}
+
+\begin{verbatim}
+import rdflib
+from rdflib.plugins.sparql import prepareQuery
+from rdflib.namespace import Namespace
+import pandas as pd
+
+def run_query(rdf_file, query_file, namespaces):
+    """
+    rdf_file = RDF file; query_file = path to sparql query file; namespaces = Namespace object for every prefix in the SPARQL query.
+    """
+    g = rdflib.Graph()
+    g.parse(rdf_file)
+    with open(query_file, 'r')  as f:
+        query_string = f.read()
+        query = prepareQuery(
+            queryString = query_string,
+            initNs = namespaces,
+        )
+
+    print(f"SPARQL QUERY IS:\n{query}")
+    
+    qres = g.query(query)
+    
+    results = pd.DataFrame(qres.bindings).map(str).rename(columns=str)
+    return results
+
+def extract_wf_namespace(rdf_file):
+    """
+    Function which extracts namespace from CWLProv RDF provenance graph.
+    """
+    g = rdflib.Graph()
+    g.parse(rdf_file)
+    namespaces = list(g.namespaces())
+    wf_namespace = ""
+    for ns in namespaces:
+        (prefix, namespace) = ns
+        if prefix == "wf":
+            wf_namespace = namespace
+
+    return wf_namespace
+
+provenance_file = "/path/to/provenance/file.ttl"
+query_file = "/path/to/sparql/query/file.sparql" # file with any of the SPARQL queries listed in the section below
+
+SCHEMA = Namespace("http://schema.org/")
+WFDESC = Namespace("http://purl.org/wf4ever/wfdesc#")
+wf_namespace = extract_wf_namespace(provenance_file)
+
+namespaces = {"wf": wf_namespace, 
+              "wfdesc": WFDESC,
+              "schema": SCHEMA }
+
+# How to run the query
+response = run_query(provenance_file, query_file, namespaces)
+\end{verbatim}
+
+\subsection{SPARQL queries}
+
+\noindent
+\textbf{Return the \emph{doc}, \emph{label} and \emph{intent} fields of the main workflow.}
+
+\lstinputlisting[basicstyle=\footnotesize]{renske-cwlprov-analysis/sparql_queries/queries/wf_metadata_fields.sparql}
+
+\noindent
+\textbf{List \emph{doc} and \emph{label} fields of all \emph{WorkflowSteps} in the main workflow.}
+
+
+\lstinputlisting[basicstyle=\footnotesize]{renske-cwlprov-analysis/sparql_queries/queries/wf_step_metadata_fields.sparql}
+
+\noindent
+\textbf{Return the \emph{doc}, \emph{label} and \emph{intent} fields of every command-line tool or nested workflow that is run by each of the steps.}
+
+\lstinputlisting[basicstyle=\footnotesize]{renske-cwlprov-analysis/sparql_queries/queries/clt_nested_wf_metadata_fields.sparql}
+
+\noindent
+\textbf{List \emph{doc}, \emph{label}, \emph{format} fields of all input parameters of main workflow.}
+
+\lstinputlisting[basicstyle=\footnotesize]{renske-cwlprov-analysis/sparql_queries/queries/wf_input_params_metadata_fields.sparql}
+
+\noindent
+\textbf{List \emph{doc}, \emph{label}, \emph{format} fields of all output parameters of main workflow.}
+
+\lstinputlisting[basicstyle=\footnotesize]{renske-cwlprov-analysis/sparql_queries/queries/wf_output_params_metadata_fields.sparql}
+
+\noindent
+\textbf{List \emph{doc}, \emph{label}, \emph{format} fields of all input parameters of nested \emph{Workflows}/\emph{CommandLineTools}.}
+
+\lstinputlisting[basicstyle=\footnotesize]{renske-cwlprov-analysis/sparql_queries/queries/clt_nested_wf_input_params_metadata_fields.sparql}
+
+\noindent
+\textbf{List \emph{doc}, \emph{label}, \emph{format} fields of all output parameters of nested \emph{Workflows}/\emph{CommandLineTools}.}
+
+
+\lstinputlisting[basicstyle=\footnotesize]{renske-cwlprov-analysis/sparql_queries/queries/clt_nested_wf_output_params_metadata_fields.sparql}

@@ -10,8 +10,19 @@
 \usepackage{tcolorbox}
 \usepackage{csquotes}
 
+\usepackage{fdsymbol} % boxes in Tables
+\let\Cross\relax
+\let\Square\relax
+\usepackage{bbding} % stars in Tables
+\usepackage{minted} % for the annotation scheme example
+
 \usepackage{array}
 % array package and thick rules for tables
+
+\usepackage{todonotes}
+\newcommand{\todorenske}[1]{\todo[inline, color=orange!30]{Renske: #1}}
+\newcommand{\stodor}[1]{\todo[color=orange!30]{Renske: #1}}
+\newcommand{\todomichael}[1]{\todo[color=blue!10]{Michael: #1}}
 
 % create "+" rule type for thick vertical lines
 \newcolumntype{+}{!{\vrule width 2pt}}
@@ -109,12 +120,12 @@ Licensed under "CC BY 4.0, Attribution 4.0 International" \url{http://creativeco
 Reproduced here with changes to fit the formatting of this dissertation.
 \include{workflow-run-crate-paper/second_submission/wrroc}
 
-\chapter{A Non-Intimidating Approach to Workflow Reproducibility in Bioinformatics: Adding Metadata to Research Objects through the Design and Evaluation of Use-Focused Extensions to CWLProv}
+\chapter{Workflow Provenance for the Bioinformatics Practitioner: Better Research Object Metadata through the Design and Evaluation of Use-Focused Extensions to CWLProv}
 \label{cwlprov-analysis}
 %\fullcite{}
 %License
 Reproduced here without changes.
-%\includepdf[pages=-]{renske-cwlprov-analysis-manuscript.pdf}
+\include{renske-cwlprov-analysis/main}
 
 %\include{conclusion/conclusion}
 

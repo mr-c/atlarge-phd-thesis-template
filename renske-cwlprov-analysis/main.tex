@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Please note that whilst this template provides a 
+% preview of the typeset manuscript for submission, it 
+% will not necessarily be the final publication layout.
+%
+% letterpaper/a4paper: US/UK paper size toggle
+% num-refs/alpha-refs: numeric/author-year citation and bibliography toggle
+
+%\documentclass[letterpaper]{oup-contemporary}
+
+\begin{abstract}
+% The Abstract (250 words maximum) should be structured to include the following details: 
+%%\todomichael{Abstract needs work}
+\textbf{Background}: %the context and purpose of the study; 
+Computational reproducibility is important for reuse of scientific research,
+% to increase trustworthiness of scientific results, 
+but is often not achieved across many domains of science due to the complexity of data and analysis pipelines. Workflow-centric research objects (ROs) have been proposed as a machine-accessible format for sharing computational research, encapsulating data as well as metadata to describe the provenance of the results. However, due to the large variety of metadata standards it is challenging to prioritize a set of provenance metadata %that is important for reproducibility.
+that is most useful in later stages of the research. 
+Here, we present a %general approach to define a standard for provenance 
+systematic approach to define such a set of metadata, and demonstrate how this strategy can guide the improvement of CWLProv, an existing RO specification for Common Workflow Language (CWL) workflows.
+% and use it to analyze and improve 
+% the current CWLProv community standard (v0.6.0).
+\textbf{Results}: %the main findings; 
+Instead of analyzing many workflows in a particular domain, we chose a single exemplary bioinformatics workflow and studied it in detail. 
+% performed a detailed analysis on one exemplary bioinformatics workflow. 
+Grounded in five realistic use case scenarios for ROs associated with the workflow, 
+we identified relevant provenance questions and defined the metadata required to answer them. 
+Subsequently, we analyzed the current CWLProv community standard for the representation of this metadata, distinguishing different qualities of representation. Finally, we used the insights gained from our analysis to design two extensions to CWLProv, addressing provenance requirements that were insufficiently represented before. 
+\textbf{Conclusions}: %brief summary and potential implications. 
+The method described here can aid workflow practitioners to identify the set of most useful metadata in their domain, and guide workflow system developers to implement automatic capture of provenance during workflow execution.  
+%Please minimize the use of abbreviations and do not cite references in the abstract.
+\end{abstract}
+
+
+
+%%% Key points will be printed at top of second page
+%%% Michael: Key points are not part of the Gigascience template, I'm turning them off
+%%\begin{keypoints*}
+%%\todomichael{needs work}
+%%\begin{itemize}
+%%\item Research objects (ROs) have been proposed as a machine-accessible format to capture the provenance of workflow executions, improving the reuse and reproducibility of computational research.
+%%\item Due to a wide range in metadata standards and ontologies, it has become difficult for practitioners and workflow system developers to prioritize which metadata should be collected to meet the provenance requirements of real workflows.
+%%\item Here, we analyze the provenance requirements of one bioinformatics workflow in detail, and show how the results can be used to inform the development of RO specifications like CWLProv.
+% \item Computational reproducibility is important for reuse of scientific research, but often not achieved due to the complexity of data and analysis pipelines.
+% \item Machine-accessible provenance metadata, encapsulated in workflow-centric Research Objects (ROs), may improve reuse and reproducibility of computational research. 
+% \item Yet, deciding which metadata should be prioritized 
+%%\end{itemize}
+%%\end{keypoints*}
+
+\input{renske-cwlprov-analysis/background/_main.tex}
+
+% \input{related_work/_main.tex}
+
+%\input{workflow/_main.tex}
+
+\input{renske-cwlprov-analysis/taxonomy/_main.tex}
+
+\input{renske-cwlprov-analysis/analysis/_main.tex}
+
+\input{renske-cwlprov-analysis/annotations/_main.tex}
+
+\input{renske-cwlprov-analysis/rdf_extension/_main.tex}
+
+% \input{data_description/_main.tex}
+
+
+
+\input{renske-cwlprov-analysis/discussion/_main.tex}
+
+% \input{potential_implications/_main.tex}
+
+% \input{methods/_main.tex}
+
+
+
+
+
+
+\section{Availability of source code and requirements (optional, if code is present)}
+
+...
+
+\section{Availability of supporting data and materials}
+
+...
+
+\section{Declarations}
+
+\subsection{List of abbreviations}
+
+\begin{itemize}
+    \item CWL: Common Workflow Language
+    \item PID: Persistent Identifier
+    \item RO: Research Object
+    \item RDF: Resource Description Framework
+    \item SPARQL: SPARQL Protocol and RDF Query Language
+\end{itemize}
+
+\subsection{Consent for publication}
+
+Not applicable.
+
+\subsection{Competing Interests}
+
+The authors declare they have no competing interests.
+\stodor{Check if you agree.}
+
+\subsection{Funding}
+
+\todorenske{@Michael I don't know.}
+
+\subsection{Author's Contributions}
+\stodor{Please check if you agree, \url{https://credit.niso.org/}}
+
+\begin{itemize}
+\item RdW: formal analysis, investigation, software, visualization, writing - original draft.
+
+\item SA: conceptualization, funding acquisition, methodology, writing - review and editing.
+
+\item AI: conceptualization, funding acquisition, methodology, supervision, writing - review and editing.
+
+\item MRC: conceptualization, methodology, software, supervision, writing - review and editing.
+\end{itemize}
+
+\section{Acknowledgements}
+
+BAZIS compute cluster
+
+Katharina Waury
+
+% \section{Authors' information (optional)}
+
+% ...
+
+
+\input{renske-cwlprov-analysis/supplementary/_main.tex}
