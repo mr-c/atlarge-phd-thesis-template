@@ -22,7 +22,7 @@ The design of the input data annotation scheme was based on a set of underlying 
 
 \begin{enumerate}[label=\textbf{IP\arabic*}]
     \item \textbf{Reuse of existing terms and ontologies.} Our scheme uses Schema.org, since this complies with the Bioschemas \cite{gray_bioschemas_2017} initiative. Schema.org terms are also adopted by related efforts such as the RO-Crate specification \cite{SoilandReyes2022a}. \label{renske:pr:bioschemas}
-    \item \textbf{Extension of the CWL standards only when absolutely necessary.} We started from the latest CWL Standards specification (v1.2), and only where these did not support adding metadata we proposed an extension. \label{renkse:pr:current_standards}
+    \item \textbf{Extension of the CWL standards only when absolutely necessary.} We started from the latest CWL Standards specification (v1.2), and only where these did not support adding metadata we proposed an extension. \label{renske:pr:current_standards}
     \item \textbf{Clear separation between input data and metadata.} This keeps the input object document relatively easy to understand. \label{renske:pr:separate}
     \item \textbf{Simplicity.} The annotation scheme should be easy to understand and use for CWL workflow authors. \label{renske:pr:simplicity}
 \end{enumerate}
@@ -39,7 +39,7 @@ In addition, the authors can convey information about a \emph{set} of input para
 \subsubsection{Vocabulary}
 Information about a set of input values can be expressed under the \emph{s:description} key. 
 
-For \emph{File} and \emph{Directory} inputs, we reused the Bioschemas Dataset profile v1.0\footnote{\url{https://bioschemas.org/profiles/Dataset/1.0-RELEASE}}, in this way complying with \ref{renkse:pr:bioschemas}. 
+For \emph{File} and \emph{Directory} inputs, we reused the Bioschemas Dataset profile v1.0\footnote{\url{https://bioschemas.org/profiles/Dataset/1.0-RELEASE}}, in this way complying with \ref{renske:pr:bioschemas}. 
 Table \ref{tab:renske:dataset_bioschemas} shows how the Schema.org terms relate to the required metadata specified in \textbf{D1} and  \textbf{D3}. 
 
 We recommend that authors adhere to this vocabulary when describing properties of their datasets which are domain-neutral. However, if they want to convey domain-specific information which is not covered by the terms in Table \ref{tab:renske:dataset_bioschemas}, they may choose to extend this annotation scheme with domain-specific ontologies (such as EDAM \cite{Ison2013}), in this way fulfilling \ref{renske:ir:extend}. 
@@ -71,7 +71,7 @@ We used Schema.org terms to express search and processing actions. Table \ref{ta
 
 \onecolumn
 \subsection{Example input annotations}
-\label{renske:sec:sup_example_annotations}
+\label{sec:renske:sup_example_annotations}
 
 \subsubsection{Annotations for a FAIR file.}
 \label{sec:renske:annot_fair}

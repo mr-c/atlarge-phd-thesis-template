@@ -1,5 +1,5 @@
 \section{Use case workflow}
-\label{sup:renske:workflow}
+\label{renske:sup:workflow}
 
 % \todorenske{Change `epitope' to `PPI'? Extra explanation that we adapted the PPI model to epitope prediction?}
 
@@ -12,8 +12,8 @@ In this section, we describe the design and implementation of our exemplary bioi
 The CWL implementation of our example workflow should meet two requirements, which we explain further in the subsequent sections:
 
 \begin{enumerate}[label=\textbf{WR\arabic*}]
-    \item \label{renkse:wr:method} Adhere to a specific method of epitope prediction which was conceptualized and provided to us by the workflow authors.
-    \item \label{renkse:wr:reproducibility} Address challenges which compromise the transparency and reproducibility of the workflow.
+    \item \label{renske:wr:method} Adhere to a specific method of epitope prediction which was conceptualized and provided to us by the workflow authors.
+    \item \label{renske:wr:reproducibility} Address challenges which compromise the transparency and reproducibility of the workflow.
 \end{enumerate}
 
 
@@ -59,7 +59,7 @@ The model predicts epitope annotations based on three groups of sequence-derived
 \subsection{\ref{renske:wr:reproducibility}: Address reproducibility challenges for this workflow}
 \label{sec:renske:wf_reproducibility}
 
-In this section, we explain \ref{renkse:wr:reproducibility} by presenting a number of characteristics of our workflow which may make its implementation challenging from a transparency and reproducibility perspective.
+In this section, we explain \ref{renske:wr:reproducibility} by presenting a number of characteristics of our workflow which may make its implementation challenging from a transparency and reproducibility perspective.
 
 \subsubsection{Workflow design}
 
@@ -82,7 +82,7 @@ Finally, the identifiers in the BioDL dataset correspond to particular \emph{seq
 \subsection{CWL implementation of the workflow}
 \label{sec:renske:wf_implementation}
 
-In this section, we describe how we implemented the epitope prediction workflow in CWL, considering the requirements described in the previous sections. Figure \ref{fig:renkse:wf} shows an overview of the CWL implementation of the workflow.
+In this section, we describe how we implemented the epitope prediction workflow in CWL, considering the requirements described in the previous sections. Figure \ref{fig:renske:wf} shows an overview of the CWL implementation of the workflow.
 
 \subsubsection{Implementation of the conceptual method (\ref{renske:wr:method})}
 
