@@ -28,40 +28,28 @@ Sample Abstract.
 % Intro is standalone
 
 \section{Background \& Context}
-In this thesis, you can reference pictures~\Cref{fig:devmodel} using Cleverref and circles \circled{5}.
 
-\begin{figure}[htb]
-	\centering
-	\includegraphics[width=0.65\columnwidth]{development_model_without_papers}
-	\caption{The stages of the FDD model and their relationship to other
-          Software Engineering concepts.}
-	\label{fig:devmodel}
-\end{figure}
+rise of computational approaches in biology
+biology / bioinformatics differs from other fields:
+- many many researchers
+- working in many different geographies
+- towards different goals
+- data collection machines are relatively less expensive and much smaller than other fields, so there is no central coordiation like LHC/CERN
+- different niches/needs within biology led to highly customized approaches, no "one-size-fits-all" tools nor tool usage; tool-choice, & parameter-choice are both critical, and custom code analysis code abounds to account for species or disease-specific differences, and unique experimental designs.
 
-We also have lists:
+All of the above is a mess, researchers started using workflow techniques to cope; low- to no-structure in some places, highly structured in others.
 
-\begin{enumerate}
-  \item Static Analysis~\circled{3} examines program artifacts or
-    their source code without executing them~%\cite{wichmann1995industrial}
-		, while
- \item Dynamic Analysis~\circled{4} relies on information gathered from their
-   execution~%\cite{cornelissen2009systematic}.
-\end{enumerate}
+This hurt interop, lots of duplicate efforts. Hindered the full realization of the benefits of a workflow approach.
 
-Or boxes:
+Therefore: CWL project
 
-\begin{framed}
-This thesis is concerned with the empirical assessment of the state of the art of how developers
-drive software development with the help of feedback loops.
-\end{framed}
+Provenanve: An un(der)realized benefit of workflows
 
-Or code:
-\begin{lstlisting}[caption={\textsc{TrinityCore}},label={lst:e1}]
- x += other.x;
- y += other.y;
- z += other.y;
-\end{lstlisting}
+Therefore CWLProv
+
+Testing the utility of this foundation: Renske's thesis
+
+And prov not just for CWL, therefore the RO-Crate Workflow Run profile
 
 
-I hope this helps you get started!
-Moritz \& Laurens
+
